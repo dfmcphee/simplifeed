@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Geddy App | This app uses Geddy.js</title>
+    <title>Simplifeed</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width" />
@@ -14,13 +14,22 @@
 
     <%- scriptLink('/js/jquery.min.js', {type:'text/javascript'}) %>
     <%- scriptLink('/js/bootstrap.min.js', {type:'text/javascript'}) %>
-    <%- scriptLink('/js/core/core.js', {type: 'text/javascript'}) %>
-    <%- scriptLink('/js/core/models.js', {type: 'text/javascript'}) %>
-    <%- scriptLink('//api.filepicker.io/v1/filepicker.js', {type: 'text/javascript'}) %>
+    <%- scriptLink('/js/jquery.ui.widget.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/jquery.iframe-transport.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/jquery.fileupload.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/justifiedGallery.js', {type: 'text/javascript'}) %>
+    <%- scriptLink('/js/imagelightbox.min.js', {type: 'text/javascript'}) %>
+    <%- scriptLink('/js/jquery.liveurl.js', {type: 'text/javascript'}) %>
 
-    <%- styleLink('/css/bootstrap.min.css', {rel:'stylesheet'}) %>
+    <%- scriptLink('/js/core/core.js', {type: 'text/javascript'}) %>
+    <%- scriptLink('/js/ejs.js', {type: 'text/javascript'}) %>
+    <!--<%- scriptLink('/js/core/models.js', {type: 'text/javascript'}) %>-->
+    <%- scriptLink('/js/config/init.js', {type: 'text/javascript'}) %>
+
+    <%- styleLink('/css/jquery.fileupload.css', {rel:'stylesheet'}) %>
+    <%- styleLink('/css/jquery.fileupload-ui.css', {rel:'stylesheet'}) %>
+    <%- styleLink('/css/csspinner.min.css', {rel:'stylesheet'}) %>
     <%- styleLink('/css/style.css', {rel:'stylesheet'}) %>
-    <%- styleLink('/css/bootstrap.responsive.min.css', {rel:'stylesheet'}) %>
 
     <!-- The fav and touch icons -->
     <link rel="shortcut icon" href="/images/favicon.ico">

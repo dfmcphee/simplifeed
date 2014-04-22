@@ -1,5 +1,6 @@
 var passport = require('../helpers/passport')
-  , requireAuth = passport.requireAuth;
+  , requireAuth = passport.requireAuth
+  , addUploadToPost = require('../helpers/files').addUploadToPost;
 
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -8,9 +9,19 @@ var Posts = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
+
+    var limit = 10;
+    var skip = 0;
+
+    if (params.page) {
+      skip = (params.page * limit) - limit;
+    }
+
     var options = {
-      includes: ['user']
+      sort: {createdAt: 'desc'},
+      includes: ['user', 'files']
     };
+
     geddy.model.Post.all({}, options, function(err, posts) {
       if (err) {
         throw err;
@@ -38,12 +49,22 @@ var Posts = function () {
 
         post.setUser(user);
 
-        post.save(function(err, data) {
-          if (err) {
-            throw err;
-          }
-          self.respondWith(post, {status: err});
-        });
+        if (params.uploads) {
+          post.save(function(err, data) {
+            var keys = Object.keys(params.uploads);
+            var i = 0;
+
+            addUploadToPost(i, keys, params.uploads, post, self);
+          });
+        }
+        else {
+          post.save(function(err, data) {
+            if (err) {
+              throw err;
+            }
+            self.respondWith(post, {status: err});
+          });
+        }
       });
     }
   };
@@ -51,7 +72,11 @@ var Posts = function () {
   this.show = function (req, resp, params) {
     var self = this;
 
-    geddy.model.Post.first(params.id, function(err, post) {
+    var options = {
+      includes: ['user', 'files']
+    };
+
+    geddy.model.Post.first(params.id, options, function(err, post) {
       if (err) {
         throw err;
       }
@@ -67,7 +92,11 @@ var Posts = function () {
   this.edit = function (req, resp, params) {
     var self = this;
 
-    geddy.model.Post.first(params.id, function(err, post) {
+    var options = {
+      includes: ['files']
+    };
+
+    geddy.model.Post.first(params.id, options, function(err, post) {
       if (err) {
         throw err;
       }
@@ -114,12 +143,20 @@ var Posts = function () {
         throw new geddy.errors.BadRequestError();
       }
       else {
-        geddy.model.Post.remove(params.id, function(err) {
-          if (err) {
-            throw err;
-          }
-          self.respondWith(post);
-        });
+        if (params.uploads) {
+          var keys = Object.keys(params.uploads);
+          var i = 0;
+
+          addUploadToPost(i, keys, params.uploads, post, self);
+        }
+        else {
+          post.save(function(err, data) {
+            if (err) {
+              throw err;
+            }
+            self.respondWith(post, {status: err});
+          });
+        }
       }
     });
   };

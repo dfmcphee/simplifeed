@@ -1,18 +1,15 @@
-<div class="hero-unit">
-  <h2 class="id"><%= post.id %></h2>
-  <%- linkTo('Edit this post', editPostPath(params.id), {class: 'btn pull-right'}); %>
-  <%- linkTo('Back to list', postPath(''), {class: 'btn pull-right'}); %>
-</div>
-
-<h2>Post Properties</h2>
-<% for(var i in post) { -%>
-<% if(i !== 'saved') { -%>
-<div class="row list-item">
-  <div class="span4">
-    <h3><%= i %></h3>
+<div id="post-<%= post.id; %>" class="media">
+  <div class="media-toolbar pull-right">
+    <a class="btn btn-warning" href="<%= editPostPath(post.id) %>"><i class='glyphicon glyphicon-pencil'></i></a>
   </div>
-  <div class="span8">
-    <h3><i class="icon-list-alt"></i><span class="<%= i %>"><%= post[i] %></span></h3>
+  <div class="pull-left">
+    <img class="media-object" src="<%= getAvatar(post.user); %>" alt="<%= post.user.username; %>">
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username; %></a></h4>
+    <p><%= post.content; %></p>
+    <% if (post.files) { %>
+      <%= partial('/posts/files', {files: post.files}); %>
+    <% } %>
   </div>
 </div>
-<% } -%><% } -%>

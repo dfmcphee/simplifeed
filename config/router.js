@@ -47,12 +47,19 @@ router.get('/auth/twitter').to('Auth.twitter');
 router.get('/auth/twitter/callback').to('Auth.twitterCallback');
 router.get('/auth/facebook').to('Auth.facebook');
 router.get('/auth/facebook/callback').to('Auth.facebookCallback');
+
 router.resource('users');
 router.resource('posts');
+
 router.post('/posts/:id/like(.:format)').to('Likes.create');
 router.post('/posts/:id/unlike(.:format)').to('Likes.remove');
+
 router.post('/posts/:id/comment(.:format)').to('Comments.create');
 router.put('/comments/:id(.:format)').to('Comments.update');
 router.post('/comments/:id(.:format)').to('Comments.remove');
-router.post('/files/upload').to('Files.upload');
+
+router.post('/files/upload').to('Files.create');
+router.put('/files/:id/update(.:format)').to('Files.update');
+router.del('/files/:id(.:format)').to('Files.remove');
+
 exports.router = router;

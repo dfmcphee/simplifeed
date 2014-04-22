@@ -16,8 +16,8 @@
 
       <div class="form-actions">
         <%- contentTag('input', 'Save', {type: 'submit', class: 'btn btn-primary'}) %>
-        <%- contentTag('button', 'Remove', {type: 'submit', formaction: '/posts/' + params.id + '?_method=DELETE', formmethod: 'POST', class: 'btn btn-danger'}) %>
-      </div>
+        <button class="btn btn-danger" formaction="/posts/<%= post.id %>?_method=DELETE" formmethod="POST" type="submit"><i class="glyphicon glyphicon-trash"></i></button>
+    </div>
     </fieldset>
   </form>
 </div>

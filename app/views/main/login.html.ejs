@@ -1,21 +1,20 @@
 <!-- Lets talk about geddy -->
 <%- styleLink('/css/auth-buttons.css', {rel:'stylesheet'}) %>
-<div class="hero-unit">
-
-  <p>
-    <form id="login-form" class="form-horizontal" action="<%= localPath %>" method="POST">
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+    <form id="login-form" class="form" role="form" action="<%= localPath %>" method="POST">
     <fieldset>
       <legend>Log In</legend>
-      <div class="control-group">
-        <label for="username" class="control-label">username</label>
+      <div class="form-group">
+        <label for="username" class="control-label">Username</label>
         <div class="controls">
-          <%- contentTag('input', params.username, {type:'text', class:'span6', name:'username'}) %>
+          <%- contentTag('input', params.username, {type:'text', class:'form-control', name:'username'}) %>
         </div>
       </div>
-      <div class="control-group">
-        <label for="password" class="control-label">password</label>
+      <div class="form-group">
+        <label for="password" class="control-label">Password</label>
         <div class="controls">
-          <%- contentTag('input', params.password, {type:'password', class:'span6', name:'password'}) %>
+          <%- contentTag('input', params.password, {type:'password', class:'form-control', name:'password'}) %>
         </div>
       </div>
       <div class="form-actions">
@@ -23,17 +22,13 @@
       </div>
     </fieldset>
     </form>
-  </p>
+  </div>
+</div>
 
-  <p style="text-align: center;">
-    <a class="btn-auth btn-twitter large"
-        href="<%= geddy.config.fullHostname %><%= twitterPath %>">
-      Log in with Twitter
-    </a>
-    &nbsp;
-    <a class="btn-auth btn-facebook large"
-        href="<%= geddy.config.fullHostname %><%= facebookPath %>">
-      Log in with Facebook
-    </a>
-  </p>
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+      <hr/>
+      <p>Don't have an account? <a href="/users/add">Sign up now.</a></p>
+      <p>Forgot your password? <a href="/users/add">Reset it now.</a></p>
+  </div>
 </div>

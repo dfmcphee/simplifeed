@@ -148,8 +148,14 @@ var Users = function () {
 
   this.show = function (req, resp, params) {
     var self = this;
+    var userOptions = {};
 
-    geddy.model.User.first(params.id, function(err, user) {
+    var postsOptions = {
+      includes: ['user', 'files'],
+      sort: {createdAt: 'desc'}
+    };
+
+    geddy.model.User.first(params.id, userOptions, function(err, user) {
       if (err) {
         throw err;
       }
@@ -157,8 +163,10 @@ var Users = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        user.password = '';
-        self.respondWith(user);
+        user.getPosts({}, postsOptions, function (err, posts) {
+          user.password = '';
+          self.respond({user: user, posts: posts});
+        });
       }
     });
   };
@@ -184,7 +192,9 @@ var Users = function () {
   this.update = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    var userId = self.session.get('userId');
+
+    geddy.model.User.first(userId, function(err, user) {
       // Only update password if it's changed
       var skip = params.password ? [] : ['password'];
 
@@ -211,7 +221,9 @@ var Users = function () {
   this.remove = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    var userId = self.session.get('userId');
+
+    geddy.model.User.first(userId, function(err, user) {
       if (err) {
         throw err;
       }
@@ -219,7 +231,7 @@ var Users = function () {
         throw new geddy.errors.BadRequestError();
       }
       else {
-        geddy.model.User.remove(params.id, function(err) {
+        geddy.model.User.remove(userId, function(err) {
           if (err) {
             throw err;
           }

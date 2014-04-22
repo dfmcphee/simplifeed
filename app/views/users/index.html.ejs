@@ -1,19 +1,18 @@
 <div class="hero-unit">
   <h2>All Users</h2>
-  <%- linkTo('Create a new User', addUserPath, {class: 'btn pull-right'}); %>
 </div>
 
 <div id="users-list">
 <% if (users) { %>
-<% for (var i = 0, ii = users.length; i < ii; i++) { %>
-  <div class="row list-item" id="user-<%= users[i].id; %>">
-    <div class="span8">
-      <h3><%- linkTo(users[i].id, userPath(users[i].id)); %></h3>
+  <% for (var i = 0; i < users.length; i++) { %>
+    <div class="media">
+      <a class="pull-left" href="#">
+        <img class="media-object" src="<%= getAvatar(users[i]); %>" alt="<%= users[i].username %>">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading"><%- linkTo(users[i].username, userPath(users[i].id)); %></h4>
+      </div>
     </div>
-    <div class="span4">
-      <h3><i class="icon-list-alt"></i><%= users[i].id; %></h3>
-    </div>
-  </div>
-<% } %>
+  <% } %>
 <% } %>
 </div>

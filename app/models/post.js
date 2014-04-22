@@ -8,6 +8,7 @@ var Post = function () {
   this.belongsTo('User');
   this.hasMany('Likes');
   this.hasMany('Comments');
+  this.hasMany('Files');
 
   /*
   this.property('login', 'string', {required: true});

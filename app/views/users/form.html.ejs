@@ -1,36 +1,51 @@
-<div class="control-group">
-  <label for="username" class="control-label">username</label>
-  <div class="controls">
-    <%- contentTag('input', user.username, {type:'text', class:'span6', name:'username'}) %>
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-1">
+    <div class="form-group">
+      <label for="username" class="control-label">Username</label>
+      <%- contentTag('input', user.username, {type:'text', class:'form-control', name:'username'}) %>
+    </div>
+    <div class="form-group">
+      <label for="email" class="control-label">Email</label>
+      <%- contentTag('input', user.email, {type:'text', class:'form-control', name:'email'}) %>
+    </div>
+    <div class="form-group">
+      <label for="password" class="control-label">Password</label>
+      <%- contentTag('input', '', {type:'password', class:'form-control', name:'password'}) %>
+    </div>
+    <div class="form-group">
+      <label for="confirmPpassword" class="control-label">Confirm Password</label>
+      <%- contentTag('input', '', {type:'password', class:'form-control', name:'confirmPassword'}) %>
+    </div>
+    <div class="form-group">
+      <label for="givenName" class="control-label">First Name</label>
+      <%- contentTag('input', user.givenName, {type:'text', class:'form-control', name:'givenName'}) %>
+    </div>
+    <div class="form-group">
+      <label for="familyName" class="control-label">Last Name</label>
+      <%- contentTag('input', user.familyName, {type:'text', class:'form-control', name:'familyName'}) %>
+    </div>
   </div>
-</div>
-<div class="control-group">
-  <label for="password" class="control-label">password</label>
-  <div class="controls">
-    <%- contentTag('input', '', {type:'password', class:'span6', name:'password'}) %>
-  </div>
-</div>
-<div class="control-group">
-  <label for="confirmPpassword" class="control-label">confirm password</label>
-  <div class="controls">
-    <%- contentTag('input', '', {type:'password', class:'span6', name:'confirmPassword'}) %>
-  </div>
-</div>
-<div class="control-group">
-  <label for="givenName" class="control-label">givenName</label>
-  <div class="controls">
-    <%- contentTag('input', user.givenName, {type:'text', class:'span6', name:'givenName'}) %>
-  </div>
-</div>
-<div class="control-group">
-  <label for="familyName" class="control-label">familyName</label>
-  <div class="controls">
-    <%- contentTag('input', user.familyName, {type:'text', class:'span6', name:'familyName'}) %>
-  </div>
-</div>
-<div class="control-group">
-  <label for="email" class="control-label">email</label>
-  <div class="controls">
-    <%- contentTag('input', user.email, {type:'text', class:'span6', name:'email'}) %>
+  <div class="col-sm-4 col-sm-offset-1">
+    <div class="profile-photo-container well">
+      <div id="profile-photo">
+        <img src="<%= getAvatar(user); %>" alt="profile photo" />
+      </div>
+      <hr/>
+      <span class="btn btn-success fileinput-button">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Add profile photo</span>
+          <input id="profile-fileupload" type="file" name="files[]" data-url="/files/upload">
+      </span>
+
+      <div id="profile-progress" class="csspinner traditional" style="display:none;"></div>
+    </div>
+    <div class="form-group">
+      <label for="phone" class="control-label">Phone Number</label>
+      <%- contentTag('input', user.phone, {type:'text', class:'form-control', name:'phone'}) %>
+    </div>
+    <div class="form-group">
+      <label for="address" class="control-label">Address</label>
+      <%- contentTag('textarea', user.address, {class:'form-control', name:'address'}) %>
+    </div>
   </div>
 </div>

@@ -1,22 +1,26 @@
-<div class="hero-unit">
-  <form id="post-form" class="form-horizontal" action="/posts" method="POST">
-    <fieldset>
-      <legend>Create a new Post</legend>
-      <% if(params.errors) { %>
-      <div class="control-group">
-        <ul>
-        <% for(var err in params.errors) { %>
-          <li><%= params.errors[err]; %></li>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <form id="post-form" class="form" role="form" action="/posts" method="POST">
+      <fieldset>
+        <legend>Create a new Post</legend>
+        <% if(params.errors) { %>
+        <div class="control-group">
+          <ul>
+          <% for(var err in params.errors) { %>
+            <li><%= params.errors[err]; %></li>
+          <% } %>
+          </ul>
+        </div>
         <% } %>
-        </ul>
-      </div>
-      <% } %>
 
-      <%- partial('form', {post: params}) %>
+        <%- partial('form', {post: params}) %>
 
-      <div class="form-actions">
-        <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
-      </div>
-    </fieldset>
-  </form>
+        <hr/>
+
+        <div class="form-actions">
+          <%- contentTag('input', 'Post', {type: 'submit', class: 'btn btn-primary'}) %>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>

@@ -21,9 +21,18 @@ var User = function () {
   this.hasMany('Posts');
   this.hasMany('Likes');
   this.hasMany('Comments');
+  this.hasMany('Files');
 
   this.fullName = function() {
 	   return this.givenName + ' ' + this.familyName;
+  };
+
+  this.getAvatar = function() {
+    var avatar = 'http://www.mrisug.org/Images/default.jpg';
+    if (this.profileThumb && this.profileThumb !== '') {
+      profileImage = this.profileThumb;
+    }
+    return avatar;
   };
 };
 

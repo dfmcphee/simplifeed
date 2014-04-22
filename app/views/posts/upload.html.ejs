@@ -1,0 +1,11 @@
+<div class="media upload alert alert-default">
+  <button type="button" class="close btn-remove-upload" data-action="/files/<%= file.id %>" aria-hidden="true">×</button>
+  <a class="pull-left" href="#">
+    <img class="media-object" src="<%= file.thumbnail %>" alt="Upload Thumbnail">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Caption</h4>
+    <input type="hidden" name="uploads[<%= file.id %>][file.id]" value="<%= file.id %>" />
+    <input type="text" name="uploads[<%= file.id %>][file.title]" value="<%= file.title %>" />
+  </div>
+</div>
