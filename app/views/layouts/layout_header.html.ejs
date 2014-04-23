@@ -14,12 +14,20 @@
 
     <%- scriptLink('/js/jquery.min.js', {type:'text/javascript'}) %>
     <%- scriptLink('/js/bootstrap.min.js', {type:'text/javascript'}) %>
+    <%- scriptLink('/js/imagesLoaded.js', {type: 'text/javascript'}) %>
+    <%- scriptLink('/js/masonry.js', {type: 'text/javascript'}) %>
     <%- scriptLink('/js/jquery.ui.widget.js', {type:'text/javascript'}) %>
     <%- scriptLink('/js/jquery.iframe-transport.js', {type:'text/javascript'}) %>
     <%- scriptLink('/js/jquery.fileupload.js', {type:'text/javascript'}) %>
     <%- scriptLink('/js/justifiedGallery.js', {type: 'text/javascript'}) %>
     <%- scriptLink('/js/imagelightbox.min.js', {type: 'text/javascript'}) %>
     <%- scriptLink('/js/jquery.liveurl.js', {type: 'text/javascript'}) %>
+
+    <!-- Typkit -->
+    <% if (geddy.config.typekit) { %>
+      <script type="text/javascript" src="<%= geddy.config.typekit.url %>"></script>
+      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <% } %>
 
     <%- scriptLink('/js/core/core.js', {type: 'text/javascript'}) %>
     <%- scriptLink('/js/ejs.js', {type: 'text/javascript'}) %>

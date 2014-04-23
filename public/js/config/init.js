@@ -28,6 +28,7 @@
  */
 
 var curImages = new Array();
+var $container;
 
 var activityIndicatorOn = function() {
 	$( '<div id="imagelightbox-loading"><div class="csspinner traditional"></div></div>' ).appendTo( 'body' );
@@ -58,8 +59,16 @@ $(document).ready(function() {
   if (pageInitialized) {
     return;
   }
-
   pageInitialized = true;
+
+
+  $container = $('#post-uploads');
+  // layout Masonry again after all images have loaded
+  $container.imagesLoaded( function() {
+    $container.masonry({
+      "gutter": 10
+    });
+  });
 
   $('#post-fileupload').fileupload({
       dataType: 'json',
@@ -70,7 +79,10 @@ $(document).ready(function() {
         $('#progress').hide();
         $.each(data.result.files, function (index, file) {
           var html = new EJS({url: '/js/templates/upload.ejs'}).render(file);
-          $('#post-uploads').append(html);
+
+          html = $.parseHTML(html);
+
+          $container.append($(html)).masonry('appended', $(html));
         });
       }
   });
@@ -100,6 +112,7 @@ $(document).ready(function() {
         success: function(data) {
           if (data && data.success) {
             $(upload).closest('.upload').remove();
+            $container.masonry();
           }
         }
     });
@@ -111,13 +124,16 @@ $(document).ready(function() {
     var upload = this;
     var action = $(this).data('action');
 
+    var defaultPhoto = '<img src="http://www.mrisug.org/Images/default.jpg" alt="profile photo">';
+    defaultPhoto += '<input type="hidden" name="profileFile" value="" />';
+
     $.ajax({
         url: action,
         type: 'DELETE',
         success: function(data) {
           if (data && data.success) {
             $(upload).closest('.upload').remove();
-            $('#profile-photo').html('<img src="http://www.mrisug.org/Images/default.jpg" alt="profile photo"><input type="hidden" name="profileFile" value="" />');
+            $('#profile-photo').html();
           }
         }
     });

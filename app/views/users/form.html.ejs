@@ -1,31 +1,21 @@
 <div class="row">
-  <div class="col-sm-4 col-sm-offset-1">
-    <div class="form-group">
+  <div class="col-sm-5">
+    <div class="well">
       <label for="username" class="control-label">Username</label>
       <%- contentTag('input', user.username, {type:'text', class:'form-control', name:'username'}) %>
-    </div>
-    <div class="form-group">
       <label for="email" class="control-label">Email</label>
       <%- contentTag('input', user.email, {type:'text', class:'form-control', name:'email'}) %>
-    </div>
-    <div class="form-group">
       <label for="password" class="control-label">Password</label>
       <%- contentTag('input', '', {type:'password', class:'form-control', name:'password'}) %>
-    </div>
-    <div class="form-group">
       <label for="confirmPpassword" class="control-label">Confirm Password</label>
       <%- contentTag('input', '', {type:'password', class:'form-control', name:'confirmPassword'}) %>
-    </div>
-    <div class="form-group">
       <label for="givenName" class="control-label">First Name</label>
       <%- contentTag('input', user.givenName, {type:'text', class:'form-control', name:'givenName'}) %>
-    </div>
-    <div class="form-group">
       <label for="familyName" class="control-label">Last Name</label>
       <%- contentTag('input', user.familyName, {type:'text', class:'form-control', name:'familyName'}) %>
     </div>
   </div>
-  <div class="col-sm-4 col-sm-offset-1">
+  <div class="col-sm-5 col-sm-offset-1">
     <div class="profile-photo-container well">
       <div id="profile-photo">
         <img src="<%= getAvatar(user); %>" alt="profile photo" />
@@ -39,11 +29,9 @@
 
       <div id="profile-progress" class="csspinner traditional" style="display:none;"></div>
     </div>
-    <div class="form-group">
+    <div class="well">
       <label for="phone" class="control-label">Phone Number</label>
       <%- contentTag('input', user.phone, {type:'text', class:'form-control', name:'phone'}) %>
-    </div>
-    <div class="form-group">
       <label for="address" class="control-label">Address</label>
       <%- contentTag('textarea', user.address, {class:'form-control', name:'address'}) %>
     </div>

@@ -52,3 +52,7 @@ exports.uniqid = function (prefix, more_entropy) {
 
   return retId;
 };
+
+exports.autoLink = function() {
+  
+}

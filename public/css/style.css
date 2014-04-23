@@ -5774,6 +5774,30 @@ button.close {
     display: none !important;
   }
 }
+body {
+  font-family: "proxima-nova", sans-serif;
+}
+.btn-circle {
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  border: thin solid;
+  padding: 0px;
+}
+.btn-circle .glyphicon {
+  margin-top: 7px;
+  margin-left: 1px;
+}
+#post-uploads {
+  margin-top: 15px;
+}
+#post-uploads .upload {
+  background: #eee;
+  border: thin solid #ddd;
+}
+#post-uploads .upload input[type="text"] {
+  width: 90%;
+}
 /*
  * Justified Gallery - v3.0.1
  * http://miromannino.com/projects/justified-gallery/
@@ -5838,30 +5862,6 @@ button.close {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
 }
-body {
-  padding-top: 70px;
-}
-img.media-object {
-  max-width: 120px;
-}
-#post-uploads {
-  margin-top: 15px;
-}
-#post-uploads .upload {
-  background: #eee;
-  border: thin solid #ddd;
-}
-#post-uploads .upload input[type="text"] {
-  width: 90%;
-}
-.profile-photo-container {
-  position: relative;
-}
-.profile-photo-container #profile-progress {
-  position: absolute;
-  top: 43%;
-  left: 50%;
-}
 #imagelightbox {
   position: fixed;
   z-index: 9999;
@@ -5889,13 +5889,20 @@ img.media-object {
 #imagelightbox-caption {
   text-align: center;
   color: #fff;
-  background-color: #666;
+  background-color: #2b2b2b;
   position: fixed;
   z-index: 10001;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0.625em;
+  padding: 0.425em;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+#imagelightbox-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 /* Live URL */
 .liveurl {
@@ -6035,4 +6042,18 @@ img.media-object {
 }
 .liveurl * {
   font: 12px/1em Tahoma, Arial, Helvetica, Segoe, sans-serif;
+}
+body {
+  padding-top: 70px;
+}
+img.media-object {
+  max-width: 120px;
+}
+.profile-photo-container {
+  position: relative;
+}
+.profile-photo-container #profile-progress {
+  position: absolute;
+  top: 43%;
+  left: 50%;
 }

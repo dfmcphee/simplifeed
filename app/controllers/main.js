@@ -31,6 +31,7 @@ var Main = function () {
       if (user) {
         data.user = user;
         data.authType = authTypes[self.session.get('authType')].name;
+        self.redirect('/posts/');
       }
       self.respond(data, {
         format: 'html'
@@ -58,5 +59,3 @@ var Main = function () {
 };
 
 exports.Main = Main;
-
-

@@ -1,13 +1,15 @@
 <div id="post-<%= post.id; %>" class="media">
   <div class="media-toolbar pull-right">
-    <a class="btn btn-warning" href="<%= editPostPath(post.id) %>"><i class='glyphicon glyphicon-pencil'></i></a>
+    <% if (session.get('userId') === post.userId) { %>
+      <a class="btn btn-circle" href="<%= editPostPath(post.id) %>"><i class='glyphicon glyphicon-pencil'></i></a>
+    <% } %>
   </div>
   <div class="pull-left">
     <img class="media-object" src="<%= getAvatar(post.user); %>" alt="<%= post.user.username; %>">
   </div>
   <div class="media-body">
-    <h4 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username; %></a></h4>
-    <p><%= post.content; %></p>
+    <h2 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username; %></a></h2>
+    <p class="lead"><%= post.content; %></p>
     <% if (post.files) { %>
       <%= partial('/posts/files', {files: post.files}); %>
     <% } %>

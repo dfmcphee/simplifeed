@@ -13,19 +13,20 @@
         </div>
 
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><%- linkTo('Posts', '/posts') %></li>
-            <li><%- linkTo('Users', '/users') %></li>
-          </ul>
 
           <ul class="nav navbar-nav navbar-right">
             <% if (session.get('userId')) { %>
+              <li>
+                <form>
+                  <a class="btn btn-primary btn-sm navbar-btn" href="/posts/add"><i class="glyphicon glyphicon-plus-sign"></i> New Post</a>
+                </form>
+              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><%- linkTo('Edit profile', '/users/' + session.get('userId') + '/edit') %></li>
+                  <li><a href="/users/<%= session.get('userId') %>/edit"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="/logout">Log out</a></li>
+                  <li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i> Log out</a></li>
                 </ul>
               </li>
             <% } else { %>
