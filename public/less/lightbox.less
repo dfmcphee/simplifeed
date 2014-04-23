@@ -1,0 +1,42 @@
+#imagelightbox {
+  position: fixed;
+  z-index: 9999;
+}
+
+#imagelightbox-loading, #imagelightbox-overlay, #imagelightbox-close, #imagelightbox-caption, #imagelightbox-nav {
+  -webkit-animation: fade-in .25s linear;
+  -moz-animation: fade-in .25s linear;
+  -o-animation: fade-in .25s linear;
+  animation: fade-in .25s linear;
+}
+
+#imagelightbox-overlay {
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#imagelightbox-caption {
+  text-align: center;
+  color: #fff;
+  background-color: #2b2b2b;
+  position: fixed;
+  z-index: 10001;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.425em;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+#imagelightbox-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
