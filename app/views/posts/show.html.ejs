@@ -1,17 +1,28 @@
-<div id="post-<%= post.id; %>" class="media">
-  <div class="media-toolbar pull-right">
-    <% if (session.get('userId') === post.userId) { %>
-      <a class="btn btn-circle" href="<%= editPostPath(post.id) %>"><i class='glyphicon glyphicon-pencil'></i></a>
-    <% } %>
-  </div>
+<div id="post-<%= post.id; %>" data-post-id="<%= post.id %>" class="media">
   <div class="pull-left">
     <img class="media-object" src="<%= getAvatar(post.user); %>" alt="<%= post.user.username; %>">
   </div>
   <div class="media-body">
+    <% if (session.get('userId') === post.userId) { %>
+      <div class="dropdown pull-right">
+        <a href="#" class="dropdown-toggle post-actions" data-toggle="dropdown"><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="<%= editPostPath(post.id) %>">Edit</a></li>
+        </ul>
+      </div>
+    <% } %>
     <h2 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username; %></a></h2>
     <p class="lead"><%= post.content; %></p>
     <% if (post.files) { %>
       <%= partial('/posts/files', {files: post.files}); %>
+    <% } %>
+  </div>
+  <div class="media-toolbar pull-right">
+    <button class="comment btn btn-circle pull-right"><i class="glyphicon glyphicon-comment"></i></button>
+    <% if (geddy.model.Post.alreadyLiked(post, session.get('userId'))) { %>
+      <button class="unlike btn btn-circle pull-right"><i class="glyphicon glyphicon-heart"></i></button>
+    <% } else { %>
+      <button class="like btn btn-circle pull-right"><i class="glyphicon glyphicon-heart-empty"></i></button>
     <% } %>
   </div>
 </div>

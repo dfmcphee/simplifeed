@@ -29,7 +29,7 @@ var Likes = function () {
             if (err) {
               throw err;
             }
-            self.respondWith(data, {status: err});
+            self.respond({success: true}, {format: 'json'});
           });
         });
       });
@@ -52,7 +52,7 @@ var Likes = function () {
           if (err) {
             throw err;
           }
-          self.respondWith(like);
+          self.respond({success: true}, {format: 'json'});
         });
       }
     });

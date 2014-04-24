@@ -2,13 +2,6 @@
   <%- contentTag('textarea', post.content, {class:'form-control', name:'content'}) %>
 </div>
 
-
-<span class="btn btn-success fileinput-button">
-    <i class="glyphicon glyphicon-plus"></i>
-    <span>Add photos...</span>
-    <input id="post-fileupload" type="file" name="files[]" data-url="/files/upload" multiple>
-</span>
-
 <div id="progress" class="csspinner traditional" style="display:none;">
 
 </div>
@@ -20,3 +13,9 @@
     <% } %>
   <% } %>
 </div>
+
+<span class="btn btn-success fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Add photos...</span>
+    <input id="post-fileupload" type="file" name="files[]" data-url="/files/upload" multiple>
+</span>

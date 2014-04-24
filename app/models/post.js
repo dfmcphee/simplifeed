@@ -31,8 +31,20 @@ var Post = function () {
     // Do some stuff
   };
   */
-
 };
+
+Post.alreadyLiked = function(post, userId) {
+  if (post.likes) {
+    for (var i=0; i < post.likes.length; i++) {
+      if (post.likes[i].userId === userId) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
 
 /*
 // Can also define them on the prototype

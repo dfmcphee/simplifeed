@@ -1,12 +1,40 @@
 .btn-circle {
+  background: #fff;
+  color: #4b4b4b;
   border-radius: 16px;
   width: 32px;
   height: 32px;
-  border: thin solid;
+  border: thin solid #A5A5A5;
   padding: 0px;
+  margin: 2px 4px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  .glyphicon {
+    margin-top: 5px;
+    margin-left: 0px;
+  }
 }
 
-.btn-circle .glyphicon {
-  margin-top: 7px;
-  margin-left: 1px;
+.btn-circle:hover {
+  border: thin solid #6b6b6b;
+  color: #3b3b3b;
+  background: #fefefe;
+}
+
+.btn-circle:focus {
+  outline-width: 0;
+  outline:0 !important;
+}
+
+.btn-circle:active {
+  outline-width: 0;
+  outline: none;
+}
+
+.unlike .glyphicon {
+  color: rgb(194, 48, 48);
 }

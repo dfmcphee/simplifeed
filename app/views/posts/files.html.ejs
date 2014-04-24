@@ -1,10 +1,13 @@
 <% if (files.length > 1) { %>
   <div class="justified-gallery" >
-  <% for (var i = 0; i < files.length; i++) { %>
-    <a href="<%= files[i].full %>" class="lightbox">
-      <img src="<%= files[i].thumbnail %>" title="<%= files[i].title %>"/>
-    </a>
-  <% } %>
+    <% for (var i = 0; i < files.length; i++) { %>
+      <a href="<%= files[i].full %>" class="lightbox">
+        <img src="<%= files[i].thumbnail %>" title="<%= files[i].title %>"/>
+      </a>
+    <% } %>
+  </div>
 <% } else { %>
-  <img src="<%= files[0].small %>" title="<%= files[0].title %>" />
+  <div class="single">
+    <img src="<%= files[0].small %>" class="single" title="<%= files[0].title %>" />
+  </div>
 <% } %>

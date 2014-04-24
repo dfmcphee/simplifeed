@@ -1,23 +1,27 @@
-<div class="hero-unit">
-  <form id="post-form" class="form" role="form" action="/posts/<%= params.id %>?_method=PUT" method="POST">
-    <fieldset>
-      <legend>Update this Post</legend>
-      <% if(params.errors) { %>
-      <div class="control-group">
-        <ul>
-        <% for(var err in params.errors) { %>
-          <li><%= params.errors[err]; %></li>
-        <% } %>
-        </ul>
-      </div>
-      <% } %>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <div class="well">
+      <form id="post-form" class="form" role="form" action="/posts/<%= params.id %>?_method=PUT" method="POST">
+        <fieldset>
+          <legend>Update this Post</legend>
+          <% if(params.errors) { %>
+          <div class="control-group">
+            <ul>
+            <% for(var err in params.errors) { %>
+              <li><%= params.errors[err]; %></li>
+            <% } %>
+            </ul>
+          </div>
+          <% } %>
 
-      <%- partial('form', {post: post}) %>
+          <%- partial('form', {post: post}) %>
 
-      <div class="form-actions">
-        <%- contentTag('input', 'Save', {type: 'submit', class: 'btn btn-primary'}) %>
-        <button class="btn btn-danger" formaction="/posts/<%= post.id %>?_method=DELETE" formmethod="POST" type="submit"><i class="glyphicon glyphicon-trash"></i></button>
+          <div class="form-actions pull-right">
+            <%- contentTag('input', 'Save', {type: 'submit', class: 'btn btn-primary'}) %>
+            <button class="btn btn-danger" formaction="/posts/<%= post.id %>?_method=DELETE" formmethod="POST" type="submit"><i class="glyphicon glyphicon-trash"></i></button>
+          </div>
+        </fieldset>
+      </form>
     </div>
-    </fieldset>
-  </form>
+  </div>
 </div>

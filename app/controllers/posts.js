@@ -19,7 +19,7 @@ var Posts = function () {
 
     var options = {
       sort: {createdAt: 'desc'},
-      includes: ['user', 'files']
+      includes: ['user', 'files', 'likes', 'comments']
     };
 
     geddy.model.Post.all({}, options, function(err, posts) {
@@ -62,7 +62,7 @@ var Posts = function () {
             if (err) {
               throw err;
             }
-            self.respondWith(post, {status: err});
+            self.redirect('/posts');
           });
         }
       });
@@ -73,7 +73,7 @@ var Posts = function () {
     var self = this;
 
     var options = {
-      includes: ['user', 'files']
+      includes: ['user', 'files', 'likes', 'comments']
     };
 
     geddy.model.Post.first(params.id, options, function(err, post) {
@@ -135,6 +135,8 @@ var Posts = function () {
   this.remove = function (req, resp, params) {
     var self = this;
 
+    var userId = self.session.get('userId');
+
     geddy.model.Post.first(params.id, function(err, post) {
       if (err) {
         throw err;
@@ -142,21 +144,16 @@ var Posts = function () {
       if (!post) {
         throw new geddy.errors.BadRequestError();
       }
+      if (post.userId !== userId) {
+        throw new geddy.errors.BadRequestError('You are not the owner of this post.');
+      }
       else {
-        if (params.uploads) {
-          var keys = Object.keys(params.uploads);
-          var i = 0;
-
-          addUploadToPost(i, keys, params.uploads, post, self);
-        }
-        else {
-          post.save(function(err, data) {
-            if (err) {
-              throw err;
-            }
-            self.respondWith(post, {status: err});
-          });
-        }
+        geddy.model.Post.remove(params.id, function(err) {
+          if (err) {
+            throw err;
+          }
+          self.redirect('/posts');
+        });
       }
     });
   };

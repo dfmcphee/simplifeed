@@ -5778,15 +5778,64 @@ body {
   font-family: "proxima-nova", sans-serif;
 }
 .btn-circle {
+  background: #fff;
+  color: #4b4b4b;
   border-radius: 16px;
   width: 32px;
   height: 32px;
-  border: thin solid;
+  border: thin solid #A5A5A5;
   padding: 0px;
+  margin: 2px 4px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 .btn-circle .glyphicon {
-  margin-top: 7px;
-  margin-left: 1px;
+  margin-top: 5px;
+  margin-left: 0px;
+}
+.btn-circle:hover {
+  border: thin solid #6b6b6b;
+  color: #3b3b3b;
+  background: #fefefe;
+}
+.btn-circle:focus {
+  outline-width: 0;
+  outline: 0 !important;
+}
+.btn-circle:active {
+  outline-width: 0;
+  outline: none;
+}
+.unlike .glyphicon {
+  color: #c23030;
+}
+.media {
+  margin-top: 20px;
+  background: #fff;
+  padding: 15px;
+}
+.media .post-actions {
+  color: #5b5b5b;
+}
+.media .post-actions .caret {
+  border-top: 8px solid;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+.media .post-actions:hover {
+  color: #3b3b3b;
+}
+.media img.media-object {
+  max-width: 120px;
+}
+.media .single {
+  text-align: center;
+}
+.media .media-toolbar {
+  margin-top: 10px;
 }
 #post-uploads {
   margin-top: 15px;
@@ -5797,6 +5846,20 @@ body {
 }
 #post-uploads .upload input[type="text"] {
   width: 90%;
+}
+.profile-photo-container {
+  position: relative;
+}
+.profile-photo-container #profile-progress {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+}
+#user-form .well {
+  background: #fff;
+}
+#user-form .well input {
+  margin-bottom: 10px;
 }
 /*
  * Justified Gallery - v3.0.1
@@ -5897,7 +5960,7 @@ body {
   bottom: 0;
   padding: 0.425em;
   font-size: 1.5em;
-  font-weight: 600;
+  font-weight: 500;
 }
 #imagelightbox-loading {
   position: absolute;
@@ -6045,15 +6108,14 @@ body {
 }
 body {
   padding-top: 70px;
+  background: #F2F3F7;
 }
-img.media-object {
-  max-width: 120px;
+.navbar-default {
+  background-color: rgba(255, 255, 255, 0.97);
 }
-.profile-photo-container {
-  position: relative;
+.align-center {
+  text-align: center;
 }
-.profile-photo-container #profile-progress {
-  position: absolute;
-  top: 43%;
-  left: 50%;
+.well {
+  background: #fff;
 }

@@ -9,3 +9,4 @@ config/secrets.json
 public/js/core/models.js
 public/js/core/helpers.js
 _session_store.json
+temp

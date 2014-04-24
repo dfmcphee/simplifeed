@@ -1,33 +1,34 @@
 <!-- Lets talk about geddy -->
 <%- styleLink('/css/auth-buttons.css', {rel:'stylesheet'}) %>
 <div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-    <form id="login-form" class="form" role="form" action="<%= localPath %>" method="POST">
-    <fieldset>
-      <legend>Log In</legend>
-      <div class="form-group">
-        <label for="username" class="control-label">Username</label>
-        <div class="controls">
-          <%- contentTag('input', params.username, {type:'text', class:'form-control', name:'username'}) %>
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="well">
+      <form id="login-form" class="form" role="form" action="<%= localPath %>" method="POST">
+      <fieldset>
+        <legend>Log In</legend>
+        <div class="form-group">
+          <label for="username" class="control-label">Username</label>
+          <div class="controls">
+            <%- contentTag('input', params.username, {type:'text', class:'form-control', name:'username'}) %>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="control-label">Password</label>
-        <div class="controls">
-          <%- contentTag('input', params.password, {type:'password', class:'form-control', name:'password'}) %>
+        <div class="form-group">
+          <label for="password" class="control-label">Password</label>
+          <div class="controls">
+            <%- contentTag('input', params.password, {type:'password', class:'form-control', name:'password'}) %>
+          </div>
         </div>
-      </div>
-      <div class="form-actions">
-        <%- contentTag('input', 'Submit', {type: 'submit', class: 'btn btn-primary'}) %>
-      </div>
-    </fieldset>
-    </form>
+        <div class="form-actions">
+          <%- contentTag('input', 'Submit', {type: 'submit', class: 'btn btn-primary'}) %>
+        </div>
+      </fieldset>
+      </form>
+    </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-      <hr/>
+  <div class="col-sm-6 col-sm-offset-3 align-center">
       <p>Don't have an account? <a href="/users/add">Sign up now.</a></p>
       <p>Forgot your password? <a href="/users/add">Reset it now.</a></p>
   </div>
