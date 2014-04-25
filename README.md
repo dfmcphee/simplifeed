@@ -1,7 +1,7 @@
 Simplifeed 2
 ===========
 
-Simplifeed is a beautiful, private social network for close friends and family. It has been completely rewritten from the ground up using Node.js, the Geddy.js framework and Amazon's S3. The schema has also been redesigned to use a relational database (PostgreSQL) to make for cleanr models and relationships. Note this is still a work in progress and more features will be coming.
+Simplifeed is a beautiful, private social network for close friends and family. It has been completely rewritten from the ground up using Node.js, the Geddy.js framework and Amazon's S3. The schema has also been redesigned to use a relational database (PostgreSQL) to make for cleaner models and relationships. Note this is still a work in progress and more features will be coming in the future.
 
 
 Requirements
