@@ -5833,6 +5833,7 @@ body {
 }
 .media .single {
   text-align: center;
+  max-width: 100%;
 }
 .media .media-toolbar {
   margin-top: 10px;
