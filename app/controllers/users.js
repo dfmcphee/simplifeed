@@ -51,6 +51,13 @@ var Users = function () {
       params.errors.sitePassword = 'The site password you entered is incorrect.';
       self.respond({user: params}, {template: 'users/add'});
     }
+
+    if (params.emailNotifications === '1') {
+      user.emailNotifications = true;
+    } else {
+      user.emailNotifications = false;
+    }
+
     // Non-blocking uniqueness checks are hard
     geddy.model.User.first({username: user.username}, function(err, data) {
       var activationUrl;
@@ -204,6 +211,11 @@ var Users = function () {
       var skip = params.password ? [] : ['password'];
 
       user.updateAttributes(params, {skip: skip});
+      if (params.emailNotifications === '1') {
+        user.emailNotifications = true;
+      } else {
+        user.emailNotifications = false;
+      }
 
       if (!user.isValid()) {
         self.respond({user: user}, {template: 'users/edit'});

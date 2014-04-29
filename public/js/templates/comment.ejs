@@ -1,8 +1,11 @@
-<div id="comment-<%= id %>" data-comment-id="<%= id %>" class="media">
-
+<div id="comment-<%= comment.id %>" data-comment-id="<%= comment.id %>" class="media">
+  <div class="pull-left">
+    <img class="media-object" src="<%= avatar %>" alt="<%= user.username %>">
+  </div>
   <div class="media-body">
-    <a class="pull-right edit-comment" data-comment-id="<%= id %>">Edit</a>
-    <p class="lead"><%= content %></p>
+    <a class="pull-right edit-comment" data-comment-id="<%= comment.id %>">Edit</a>
+    <h2 class="media-heading"><a href="/users/<%= user.id %>"><%= user.username %></a></h2>
+    <p class="lead"><%= comment.content %></p>
   </div>
 </div>
 <hr/>

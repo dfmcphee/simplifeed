@@ -21,6 +21,7 @@ var config = {
 , detailedErrors: true
 , debug: true
 , hostname: 'localhost'
+, externalHost: 'simplifeed.me'
 , port: 4000
 , model: {
     defaultAdapter: 'postgres'

@@ -11,6 +11,7 @@
         </ul>
       </div>
     <% } %>
+    <abbr class="timeago pull-right" title="<%= geddy.moment(post.createdAt).toISOString() %>"></abbr>
     <h2 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username; %></a></h2>
     <p class="lead"><%= post.content; %></p>
     <% if (post.files) { %>

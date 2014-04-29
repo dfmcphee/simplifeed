@@ -62,4 +62,5 @@ router.post('/files/upload').to('Files.create');
 router.put('/files/:id/update(.:format)').to('Files.update');
 router.del('/files/:id(.:format)').to('Files.remove');
 
+router.get('/notifications(.:format)').to('Notifications.index');
 exports.router = router;

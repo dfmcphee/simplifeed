@@ -18,7 +18,12 @@ var Posts = function () {
     }
 
     var options = {
-      includes: ['user', 'files', 'likes', 'comments'],
+      includes: {
+        'user': null,
+        'files': null,
+        'likes': null,
+        'comments': 'user'
+      },
       sort: {
           createdAt: 'desc'
         , 'comments.createdAt': 'asc'
@@ -29,6 +34,7 @@ var Posts = function () {
       if (err) {
         throw err;
       }
+      console.log(posts);
       self.respondWith(posts, {type:'Post'});
     });
   };
@@ -76,10 +82,14 @@ var Posts = function () {
     var self = this;
 
     var options = {
-      includes: ['user', 'files', 'likes', 'comments'],
+      includes: {
+        'user': null,
+        'files': null,
+        'likes': null,
+        'comments': 'user'
+      },
       sort: {
           createdAt: 'asc'
-        , 'comments.createdAt': 'asc'
       }
     };
 

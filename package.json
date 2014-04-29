@@ -13,7 +13,8 @@
     "nodemailer": "*",
     "pg": "2.5.x",
     "uploadfs": "*",
-    "formidable": "*"
+    "formidable": "*",
+    "moment": "*"
   },
   "devDependencies": {},
   "engines": {

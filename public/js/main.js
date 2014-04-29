@@ -1,5 +1,6 @@
 //@prepros-append post-actions.js
 //@prepros-append uploads.js
+//@prepros-append notifications.js
 //@prepros-append lightbox.js
 //@prepros-append liveurl.js
 
@@ -24,4 +25,6 @@ $(document).ready(function() {
       'lt1024':''
     }
   });
+
+  $("abbr.timeago").timeago();
 });

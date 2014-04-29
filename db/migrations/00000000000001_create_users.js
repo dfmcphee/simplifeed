@@ -12,6 +12,7 @@ var CreateUsers = function () {
           t.column('profileThumb', 'string');
           t.column('phone', 'string');
           t.column('address', 'string');
+          t.column('emailNotifications', 'boolean');
         }
       , callback = function (err, data) {
           if (err) {

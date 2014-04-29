@@ -11,6 +11,7 @@ var User = function () {
   , profileThumb: {type: 'string'}
   , phone: {type: 'string'}
   , address: {type: 'string'}
+  , emailNotifications: {type: 'boolean'}
   });
 
   this.validatesPresent('username', {message: 'Please enter a username.'});
@@ -30,14 +31,6 @@ var User = function () {
 
   this.fullName = function() {
 	   return this.givenName + ' ' + this.familyName;
-  };
-
-  this.getAvatar = function() {
-    var avatar = 'http://www.mrisug.org/Images/default.jpg';
-    if (this.profileThumb && this.profileThumb !== '') {
-      profileImage = this.profileThumb;
-    }
-    return avatar;
   };
 };
 

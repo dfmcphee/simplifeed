@@ -47,4 +47,4 @@ File.someStaticMethod = function () {
 File.someStaticProperty = 'YYZ';
 */
 
-exports.File = File;
+File = geddy.model.register('File', File);

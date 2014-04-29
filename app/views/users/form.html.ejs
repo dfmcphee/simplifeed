@@ -35,6 +35,14 @@
         <%- contentTag('input', user.familyName, {type:'text', class:'form-control', name:'familyName'}) %>
         <%- fieldMessage(errors, 'familyName'); %>
       </div>
+
+      <div class="checkbox">
+        <label for="emailNotifications" class="control-label">
+          Do you want to receive email notifications?
+          <% var checked = user.emailNotifications ? 'checked' : ''; %>
+          <%- contentTag('input', '1', {type:'checkbox', checked: checked, name:'emailNotifications'}) %>
+        </label>
+      </div>
     </div>
   </div>
   <div class="col-sm-6">

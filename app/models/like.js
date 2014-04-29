@@ -43,4 +43,4 @@ Like.someStaticMethod = function () {
 Like.someStaticProperty = 'YYZ';
 */
 
-exports.Like = Like;
+Like = geddy.model.register('Like', Like);

@@ -53,7 +53,11 @@ $(document).ready(function() {
           data: 'content=' + content,
           success: function(data) {
             if (data && data.success) {
-              var html = new EJS({url: '/js/templates/comment.ejs'}).render(data.comment);
+              var html = new EJS({url: '/js/templates/comment.ejs'}).render({
+                comment: data.comment,
+                user: data.user,
+                avatar: data.avatar
+              });
               $(commentButton).closest('.comments').find('.comment-list').append(html);
               var count = Number($(commentButton).closest('.media-toolbar').find('.comment-count').text());
               $(commentButton).closest('.media-toolbar').find('.comment-count').html(count + 1);

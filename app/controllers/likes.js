@@ -10,7 +10,7 @@ var Likes = function () {
     var self = this;
     var userId = self.session.get('userId');
 
-    geddy.model.Post.first(params.id, function(err, post) {
+    geddy.model.Post.first(params.id, {includes: ['user']}, function(err, post) {
       geddy.model.User.first(userId, function(err, user) {
         if (err) {
           throw err;
@@ -22,6 +22,14 @@ var Likes = function () {
           }
           var like = geddy.model.Like.create({});
 
+          if (user.id !== post.userId) {
+            geddy.model.Notification.createAndSend(
+              user.fullName() + ' liked your post.',
+              '/posts/' + post.id,
+              post.user
+            );
+          }
+
           like.setUser(user);
           like.setPost(post);
 
@@ -29,6 +37,7 @@ var Likes = function () {
             if (err) {
               throw err;
             }
+
             self.respond({success: true}, {format: 'json'});
           });
         });

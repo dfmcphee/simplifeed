@@ -5850,6 +5850,10 @@ body {
   text-align: center;
   max-width: 100%;
 }
+.media .media-body abbr {
+  margin-top: 2px;
+  margin-right: 10px;
+}
 .media .media-toolbar {
   margin-top: 10px;
 }
@@ -6131,6 +6135,9 @@ body {
 }
 .navbar-default {
   background-color: rgba(255, 255, 255, 0.97);
+}
+.badge.unread {
+  background: #428bca;
 }
 .align-center {
   text-align: center;

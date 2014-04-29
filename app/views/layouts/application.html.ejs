@@ -17,6 +17,12 @@
           <ul class="nav navbar-nav navbar-right">
             <% if (session.get('userId')) { %>
               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notifications <span id="notification-count" class="badge">0</span><b class="caret"></b></a>
+                <ul id="notifications" class="dropdown-menu">
+
+                </ul>
+              </li>
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="/users/<%= session.get('userId') %>/edit"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
@@ -40,5 +46,10 @@
       <%- displayFlash(flash); %>
       <%- render(); %>
     </div>
+    <script>
+      <% if (session.get('userId')) { %>
+        var userId = "<%= session.get('userId') %>";
+      <% } %>
+    </script>
   </body>
 <%= partial('layout_footer'); %>

@@ -1,5 +1,6 @@
 var passport = require('../helpers/passport')
   , requireAuth = passport.requireAuth;
+var getAvatar = require('../helpers/files').getAvatar;
 
 var Comments = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -9,7 +10,7 @@ var Comments = function () {
   this.create = function (req, resp, params) {
     var self = this;
 
-    geddy.model.Post.first(params.id, function(err, post) {
+    geddy.model.Post.first(params.id, {includes: ['user']}, function(err, post) {
       geddy.model.User.first(self.session.get('userId'), function(err, user) {
         if (err) {
           throw err;
@@ -20,11 +21,21 @@ var Comments = function () {
         comment.setUser(user);
         comment.setPost(post);
 
+        if (user.id !== post.userId) {
+          geddy.model.Notification.createAndSend(
+            user.fullName() + ' commented on your post.',
+            '/posts/' + post.id,
+            post.user
+          );
+        }
+
+        var avatar = getAvatar(user);
+
         comment.save(function(err, data) {
           if (err) {
             throw err;
           }
-          self.respond({success: true, comment: data}, {format: 'json'});
+          self.respond({success: true, comment: data, user: user, avatar: avatar}, {format: 'json'});
         });
       });
     });
