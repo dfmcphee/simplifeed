@@ -1,6 +1,7 @@
+//@prepros-append post-actions.js
+//@prepros-append uploads.js
 //@prepros-append lightbox.js
 //@prepros-append liveurl.js
-//@prepros-append uploads.js
 
 var $container;
 var pageInitialized = false;

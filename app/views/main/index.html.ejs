@@ -1,15 +1,49 @@
-<!-- Lets talk about geddy -->
-<div class="hero-unit geddy-welcome-box">
-  <% if (user) { %>
-    <h1>
-      Hello<% if (user.givenName) { %>, <%= user.givenName %><% } %>
-    </h1>
-    <p>You've successfully logged in to this Geddy app (via <%= authType %>).</p>
-    <p><%- linkTo('Click here to log back out', logoutPath) %></p>
-  <% } else { %>
-    <h1>Hello, stranger</h1>
-    <p>You're not authenticated with this app.</p>
-    <p><%- linkTo('Click here to create a user account.', addUserPath) %></p>
-    <p><%- linkTo('Click here to log in with Facebook or Twitter.', loginPath) %></p>
-  <% } %>
-</div>
+
+
+    <div class="jumbotron">
+      <h1>Simplifeed</h1>
+      <p class="lead">The simple, private social network.</p>
+      <a class="btn btn-default" href="https://github.com/dfmcphee/simplifeed2"><i class="glyphicon"></i> Fork on Github</a>
+    </div>
+
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-sm-7">
+          <h2 class="featurette-heading">Private. <span class="text-muted">No complicated settings.</span></h2>
+          <p class="lead">The idea is to only allow those you want to join your network. Share with close friends or family and that's it. No need to manage different groups or settings. Set a password for your network and only allow users with this password to sign up for an account.</p>
+        </div>
+        <div class="col-sm-5">
+          <img class="featurette-image img-responsive" src="/img/users-screenshot.png" alt="Album Screenshot">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-sm-5">
+          <img class="featurette-image img-responsive" src="/img/album-screenshot.png" alt="Album Screenshot">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Beautiful galleries. <span class="text-muted">Share your world.</span></h2>
+          <p class="lead">Simplifeed is a great way to share moments and memories with those you care about. Share single images or large albums. Storage is offloaded to Amazon's S3 service for fast and efficient cloud storage.</p>
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Real-time. <span class="text-muted">Instant notifications.</span></h2>
+          <p class="lead">Utilizing the power and speed of Node.js, Simplifeed delivers new content and notifications in real-time. Get the latest updates as they happen without ever needing to refresh the page.</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="/img/album-screenshot.png" alt="Album Screenshot">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->

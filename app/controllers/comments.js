@@ -24,7 +24,7 @@ var Comments = function () {
           if (err) {
             throw err;
           }
-          self.respondWith(data, {status: err});
+          self.respond({success: true, comment: data}, {format: 'json'});
         });
       });
     });

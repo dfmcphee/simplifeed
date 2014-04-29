@@ -1,0 +1,10 @@
+<div id="comment-<%= comment.id; %>" data-comment-id="<%= comment.id %>" class="media">
+
+  <div class="media-body">
+    <% if (session.get('userId') === comment.userId) { %>
+      <a class="pull-right edit-comment" data-comment-id="<%= comment.id %>">Edit</a>
+    <% } %>
+    <p class="lead"><%= comment.content %></p>
+  </div>
+</div>
+<hr/>

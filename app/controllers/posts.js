@@ -18,8 +18,11 @@ var Posts = function () {
     }
 
     var options = {
-      sort: {createdAt: 'desc'},
-      includes: ['user', 'files', 'likes', 'comments']
+      includes: ['user', 'files', 'likes', 'comments'],
+      sort: {
+          createdAt: 'desc'
+        , 'comments.createdAt': 'asc'
+      }
     };
 
     geddy.model.Post.all({}, options, function(err, posts) {
@@ -73,7 +76,11 @@ var Posts = function () {
     var self = this;
 
     var options = {
-      includes: ['user', 'files', 'likes', 'comments']
+      includes: ['user', 'files', 'likes', 'comments'],
+      sort: {
+          createdAt: 'asc'
+        , 'comments.createdAt': 'asc'
+      }
     };
 
     geddy.model.Post.first(params.id, options, function(err, post) {

@@ -1,18 +1,40 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="well">
-      <label for="username" class="control-label">Username</label>
-      <%- contentTag('input', user.username, {type:'text', class:'form-control', name:'username'}) %>
-      <label for="email" class="control-label">Email</label>
-      <%- contentTag('input', user.email, {type:'text', class:'form-control', name:'email'}) %>
-      <label for="password" class="control-label">Password</label>
-      <%- contentTag('input', '', {type:'password', class:'form-control', name:'password'}) %>
-      <label for="confirmPpassword" class="control-label">Confirm Password</label>
-      <%- contentTag('input', '', {type:'password', class:'form-control', name:'confirmPassword'}) %>
-      <label for="givenName" class="control-label">First Name</label>
-      <%- contentTag('input', user.givenName, {type:'text', class:'form-control', name:'givenName'}) %>
-      <label for="familyName" class="control-label">Last Name</label>
-      <%- contentTag('input', user.familyName, {type:'text', class:'form-control', name:'familyName'}) %>
+      <div class="form-group <%= fieldClass(errors, 'username') %>">
+        <label for="username" class="control-label">* Username</label>
+        <%- contentTag('input', user.username, {type:'text', class:'form-control', name:'username'}) %>
+        <%- fieldMessage(errors, 'username'); %>
+      </div>
+
+      <div class="form-group <%= fieldClass(errors, 'email') %>">
+        <label for="email" class="control-label">* Email</label>
+        <%- contentTag('input', user.email, {type:'text', class:'form-control', name:'email'}) %>
+        <%- fieldMessage(errors, 'email'); %>
+      </div>
+
+      <div class="form-group <%= fieldClass(errors, 'password') %>">
+        <label for="password" class="control-label">* Password</label>
+        <%- contentTag('input', '', {type:'password', class:'form-control', name:'password'}) %>
+        <%- fieldMessage(errors, 'password'); %>
+      </div>
+
+      <div class="form-group <%= fieldClass(errors, 'confirmPassword') %>">
+        <label for="confirmPassword" class="control-label">* Confirm Password</label>
+        <%- contentTag('input', '', {type:'password', class:'form-control', name:'confirmPassword'}) %>%>
+      </div>
+
+      <div class="form-group <%= fieldClass(errors, 'givenName') %>">
+        <label for="givenName" class="control-label">* First Name</label>
+        <%- contentTag('input', user.givenName, {type:'text', class:'form-control', name:'givenName'}) %>
+        <%- fieldMessage(errors, 'givenName'); %>
+      </div>
+
+      <div class="form-group <%= fieldClass(errors, 'familyName') %>">
+        <label for="familyName" class="control-label">* Last Name</label>
+        <%- contentTag('input', user.familyName, {type:'text', class:'form-control', name:'familyName'}) %>
+        <%- fieldMessage(errors, 'familyName'); %>
+      </div>
     </div>
   </div>
   <div class="col-sm-6">

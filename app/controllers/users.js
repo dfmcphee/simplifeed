@@ -46,6 +46,11 @@ var Users = function () {
       , user = geddy.model.User.create(params)
       , sha;
 
+    if (params.sitePassword !== geddy.config.password) {
+      params.errors = {};
+      params.errors.sitePassword = 'The site password you entered is incorrect.';
+      self.respond({user: params}, {template: 'users/add'});
+    }
     // Non-blocking uniqueness checks are hard
     geddy.model.User.first({username: user.username}, function(err, data) {
       var activationUrl;
@@ -115,7 +120,7 @@ var Users = function () {
           });
         }
         else {
-          self.respondWith(user, {status: err});
+          self.respond({user: user}, {template: 'users/add'});
         }
       }
     });
@@ -201,7 +206,7 @@ var Users = function () {
       user.updateAttributes(params, {skip: skip});
 
       if (!user.isValid()) {
-        self.respondWith(user);
+        self.respond({user: user}, {template: 'users/edit'});
       }
       else {
         if (params.password) {

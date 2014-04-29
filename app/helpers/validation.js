@@ -18,3 +18,17 @@ exports.validFileType = function (fileType){
     return false;
   }
 }
+
+exports.fieldClass = function(errors, field) {
+  if (errors[field]) {
+    return 'has-error';
+  }
+};
+
+exports.fieldMessage = function(errors, field) {
+  if (errors[field]) {
+    return '<p class="help-block">' + errors[field] + '</p>';
+  } else {
+    return '';
+  }
+};

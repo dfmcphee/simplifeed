@@ -3,16 +3,25 @@
 </div>
 
 <div id="users-list">
-<% if (users) { %>
-  <% for (var i = 0; i < users.length; i++) { %>
-    <div class="media">
-      <a class="pull-left" href="#">
-        <img class="media-object" src="<%= getAvatar(users[i]); %>" alt="<%= users[i].username %>">
-      </a>
-      <div class="media-body">
-        <h4 class="media-heading"><%- linkTo(users[i].username, userPath(users[i].id)); %></h4>
-      </div>
+  <% if (users) { %>
+    <div class="row">
+      <% for (var i = 0; i < users.length; i++) { %>
+        <div class="col-md-4">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img class="media-object" src="<%= getAvatar(users[i]); %>" alt="<%= users[i].username %>">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading"><a href="<%= userPath(users[i].id) %>"><%= users[i].username %></a></h3>
+              <p class="lead"><%= users[i].fullName() %></p>
+            </div>
+          </div>
+        </div>
+        <% if (i % 3 === 2) { %>
+          </div>
+          <div class="row">
+        <% } %>
+      <% } %>
     </div>
   <% } %>
-<% } %>
 </div>

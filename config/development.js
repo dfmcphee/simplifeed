@@ -17,7 +17,7 @@
 */
 
 var config = {
-  appName: 'Geddy App (development)'
+  appName: 'Simplifeed (development)'
 , detailedErrors: true
 , debug: true
 , hostname: 'localhost'

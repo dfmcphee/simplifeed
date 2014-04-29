@@ -13,6 +13,8 @@ $(document).ready(function() {
             $(likeButton).find('.glyphicon')
               .removeClass('glyphicon-heart-empty')
               .addClass('glyphicon-heart');
+            var count = Number($(likeButton).closest('.media-toolbar').find('.like-count').text());
+            $(likeButton).closest('.media-toolbar').find('.like-count').html(count + 1);
           }
         }
     });
@@ -32,8 +34,33 @@ $(document).ready(function() {
             $(likeButton).find('.glyphicon')
               .removeClass('glyphicon-heart')
               .addClass('glyphicon-heart-empty');
+            var count = Number($(likeButton).closest('.media-toolbar').find('.like-count').text());
+            $(likeButton).closest('.media-toolbar').find('.like-count').html(count - 1);
           }
         }
     });
+  });
+
+  $('.comments').on('click', '.add-comment', function(e) {
+    var commentButton = this;
+    var postId = $(commentButton).closest('.media').data('post-id');
+    var content = $(commentButton).closest('.comments').find('.comment-input').val();
+
+    if (content && content !== '') {
+      $.ajax({
+          url: '/posts/' + postId + '/comment',
+          type: 'POST',
+          data: 'content=' + content,
+          success: function(data) {
+            if (data && data.success) {
+              var html = new EJS({url: '/js/templates/comment.ejs'}).render(data.comment);
+              $(commentButton).closest('.comments').find('.comment-list').append(html);
+              var count = Number($(commentButton).closest('.media-toolbar').find('.comment-count').text());
+              $(commentButton).closest('.media-toolbar').find('.comment-count').html(count + 1);
+              $(commentButton).closest('.comments').find('.comment-input').val('');
+            }
+          }
+      });
+    }
   });
 });

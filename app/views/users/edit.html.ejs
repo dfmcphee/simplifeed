@@ -3,17 +3,9 @@
     <form id="user-form" class="form" action="/users/<%= params.id %>?_method=PUT" method="POST">
       <fieldset>
         <legend>Edit you profile</legend>
-        <% if(params.errors) { %>
-        <div class="control-group">
-          <ul>
-          <% for(var err in params.errors) { %>
-            <li><%= params.errors[err]; %></li>
-          <% } %>
-          </ul>
-        </div>
-        <% } %>
 
-        <%- partial('form', {user: user}) %>
+        <% var errors = (((typeof(user) !== 'undefined') && user.errors) ? user.errors : {}); %>
+        <%- partial('form', {user: user, errors: errors}) %>
 
         <div class="form-group">
           <%- contentTag('input', 'Save', {type: 'submit', class: 'btn btn-primary pull-right'}) %>

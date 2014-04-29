@@ -5812,6 +5812,21 @@ body {
 .unlike .glyphicon {
   color: #c23030;
 }
+.badge-circle {
+  background: #fff;
+  color: #4b4b4b;
+  border-radius: 16px;
+  width: 32px;
+  height: 32px;
+  border: thin solid #A5A5A5;
+  padding: 0px;
+  margin: 0px;
+  line-height: 2.5;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+}
 .media {
   margin-top: 20px;
   background: #fff;
@@ -5860,6 +5875,9 @@ body {
   background: #fff;
 }
 #user-form .well input {
+  margin-bottom: 10px;
+}
+#users-list .col-md-4 {
   margin-bottom: 10px;
 }
 /*

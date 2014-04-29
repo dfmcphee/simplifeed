@@ -3,17 +3,16 @@
     <form id="user-form" class="form" action="/users" method="POST">
       <fieldset>
         <legend>Sign up</legend>
-        <% if(params.errors) { %>
-        <div class="control-group">
-          <ul>
-          <% for(var err in params.errors) { %>
-            <li><%= params.errors[err]; %></li>
-          <% } %>
-          </ul>
-        </div>
-        <% } %>
 
-        <%- partial('form', {user: params}) %>
+        <% var errors = (((typeof(user) !== 'undefined') && user.errors) ? user.errors : {}); %>
+
+        <div class="form-group <%= fieldClass(errors, 'sitePassword') %>">
+          <label for="email" class="control-label">* Site Password</label>
+          <%- contentTag('input', params.sitePassword, {type:'text', class:'form-control', name:'sitePassword'}) %>
+          <%- fieldMessage(errors, 'sitePassword'); %>
+        </div>
+
+        <%- partial('form', {user: params, errors: errors}) %>
 
         <div class="form-group">
           <%- contentTag('input', 'Submit', {type: 'submit', class: 'btn btn-primary'}) %>
