@@ -6,7 +6,8 @@ var Notifications = function () {
     var userId = self.session.get('userId');
 
     var options = {
-      limit: 5
+      limit: 5,
+      sort: {read: 'desc', createdAt: 'desc'}
     };
 
     geddy.model.Notification.all({userId: userId}, options, function(err, notifications) {

@@ -11,10 +11,13 @@ geddy.io.addListenersForModels();
 geddy.io.addListenersForModels(['Notification']);
 
 geddy.model.Notification.on('save', function (item) {
-  console.log(item);
-
   if (item.userId === userId) {
-    var notification = '<li id="notification-' + item.id + '"><a href="' + item.link + '">' + item.content + '</a></li>';
+    var unreadClass = '';
+    if (item.unread) {
+      unreadClass = 'unread';
+    }
+
+    var notification = '<li id="notification-' + item.id + '" class="' + unreadClass + '"><a href="' + item.link + '">' + item.content + '</a></li>';
     $('#notifications').prepend(notification);
 
     var count = Number ($('#notification-count').text());

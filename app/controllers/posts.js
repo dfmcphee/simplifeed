@@ -1,6 +1,7 @@
 var passport = require('../helpers/passport')
   , requireAuth = passport.requireAuth
-  , addUploadToPost = require('../helpers/files').addUploadToPost;
+  , addUploadToPost = require('../helpers/files').addUploadToPost
+  , removeUpload = require('../helpers/files').removeUpload;
 
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -154,7 +155,15 @@ var Posts = function () {
 
     var userId = self.session.get('userId');
 
-    geddy.model.Post.first(params.id, function(err, post) {
+    var options = {
+      includes: {
+        'files': null,
+        'likes': null,
+        'comments': null
+      }
+    };
+
+    geddy.model.Post.first(params.id, options, function(err, post) {
       if (err) {
         throw err;
       }
@@ -165,6 +174,32 @@ var Posts = function () {
         throw new geddy.errors.BadRequestError('You are not the owner of this post.');
       }
       else {
+        var removeCallback = function (err, data) {
+          if (err) {
+            throw err;
+          }
+        };
+
+        if (post.comments) {
+          for (var i=0; i < post.comments.length; i++) {
+            geddy.model.Comment.remove(post.comments[i].id, removeCallback);
+          }
+        }
+
+        if (post.likes) {
+          for (var i=0; i < post.likes.length; i++) {
+            geddy.model.Like.remove(post.likes[i].id, removeCallback);
+          }
+        }
+
+        if (post.files) {
+          for (var i=0; i < post.files.length; i++) {
+            var filename = post.files[i].filename.split('.');
+            removeUpload(filename);
+            geddy.model.File.remove(post.files[i].id, removeCallback);
+          }
+        }
+
         geddy.model.Post.remove(params.id, function(err) {
           if (err) {
             throw err;

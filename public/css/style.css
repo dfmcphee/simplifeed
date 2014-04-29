@@ -5857,6 +5857,22 @@ body {
 .media .media-toolbar {
   margin-top: 10px;
 }
+#notifications li {
+  padding: 5px;
+}
+#notifications li a {
+  padding: 10px;
+  cursor: pointer;
+  white-space: normal;
+  width: 240px;
+}
+#notifications li.unread a {
+  color: #fff;
+  background: #428bca;
+}
+#notifications li.unread a:hover {
+  background-color: #3071a9;
+}
 #post-uploads {
   margin-top: 15px;
 }

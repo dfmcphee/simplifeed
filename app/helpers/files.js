@@ -28,6 +28,15 @@ function addUpload(i, keys, uploads, post, self) {
   });
 }
 
+exports.removeUpload = function (filename) {
+  geddy.uploadfs.remove(filename[0] + '.' + filename[1], function(e) {
+    geddy.uploadfs.remove(filename[0] + '.small.' + filename[1], function(e) {
+      geddy.uploadfs.remove(filename[0] + '.thumbnail.' + filename[1], function(e) {
+      });
+    });
+  });
+};
+
 exports.getAvatar = function (user) {
   var avatar = 'http://www.mrisug.org/Images/default.jpg';
   if (user.profileThumb && user.profileThumb !== '') {

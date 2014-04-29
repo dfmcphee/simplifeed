@@ -2,32 +2,8 @@ var passport = require('../helpers/passport')
   , requireAuth = passport.requireAuth
   , validFileType = require('../helpers/validation').validFileType
   , uniqid = require('../helpers/general').uniqid
-  , formidable = require('formidable')
-  , uploadfs = require('uploadfs')();
-
-uploadfs.init({
-  backend: 's3',
-  secret: geddy.config.s3.secret,
-  key: geddy.config.s3.key,
-  bucket: geddy.config.s3.bucket,
-  region: geddy.config.s3.region,
-  tempPath: 'temp',
-  imageSizes: [
-    {
-      name: 'thumbnail',
-      width: 200,
-      height: 200
-    },
-    {
-      name: 'small',
-      width: 500,
-      height: 500
-    }
-  ],
-  parallel: 10
-}, function() {
-  console.log('S3 initialized.');
-});
+  , removeUpload = require('../helpers/files').removeUpload
+  , formidable = require('formidable');
 
 var Files = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -50,16 +26,16 @@ var Files = function () {
       var fileExt = file.name.split('.').pop();
       var newFile = uniqid('img') + '.' + fileExt.toLowerCase();
 
-      uploadfs.copyImageIn(file.path, '/uploads/' + newFile, function(e, info) {
+      geddy.uploadfs.copyImageIn(file.path, '/uploads/' + newFile, function(e, info) {
         if (e) {
           throw new geddy.errors.BadRequestError(e);
         } else {
           var fileParams = {
             filename: info.basePath + '.' + info.extension,
             title: '',
-            full: uploadfs.getUrl() + info.basePath + '.' + info.extension,
-            small: uploadfs.getUrl() + info.basePath + '.small.' + info.extension,
-            thumbnail: uploadfs.getUrl() + info.basePath + '.thumbnail.' + info.extension
+            full: geddy.uploadfs.getUrl() + info.basePath + '.' + info.extension,
+            small: geddy.uploadfs.getUrl() + info.basePath + '.small.' + info.extension,
+            thumbnail: geddy.uploadfs.getUrl() + info.basePath + '.thumbnail.' + info.extension
           };
 
           var createdFile = geddy.model.File.create(fileParams);
@@ -75,8 +51,8 @@ var Files = function () {
             self.respond({
               files: [{
                 id: createdFile.id,
-                url: uploadfs.getUrl() + info.basePath + '.' + info.extension,
-                thumbnail_url: uploadfs.getUrl() + info.basePath + '.thumbnail.' + info.extension,
+                url: geddy.uploadfs.getUrl() + info.basePath + '.' + info.extension,
+                thumbnail_url: geddy.uploadfs.getUrl() + info.basePath + '.thumbnail.' + info.extension,
                 name: newFile,
                 type: file.type,
                 size: file.size,
@@ -109,17 +85,12 @@ var Files = function () {
       }
       else {
         var filename = file.filename.split('.');
-        uploadfs.remove(filename[0] + '.' + filename[1], function(e) {
-          uploadfs.remove(filename[0] + '.small.' + filename[1], function(e) {
-            uploadfs.remove(filename[0] + '.thumbnail.' + filename[1], function(e) {
-              geddy.model.File.remove(params.id, function(err) {
-                if (err) {
-                  throw err;
-                }
-                self.respond({success: true}, {format: 'json'});
-              });
-            });
-          });
+        removeUpload(filename);
+        geddy.model.File.remove(params.id, function(err) {
+          if (err) {
+            throw err;
+          }
+          self.respond({success: true}, {format: 'json'});
         });
       }
     });

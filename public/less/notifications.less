@@ -1,0 +1,24 @@
+#notifications {
+  li {
+    padding: 5px;
+
+    a {
+      padding:10px;
+      cursor:pointer;
+      white-space: normal;
+      width:240px;
+    }
+  }
+
+  li.unread {
+
+    a {
+      color: #fff;
+      background: @brand-primary;
+    }
+
+    a:hover {
+      background-color: darken(@brand-primary, 10%);
+    }
+  }
+}

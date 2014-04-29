@@ -19,6 +19,33 @@ var init = function(cb) {
 
   sockets.init();
 
+  // Initialize s3
+  geddy.uploadfs = require('uploadfs')();
+
+  geddy.uploadfs.init({
+    backend: 's3',
+    secret: geddy.config.s3.secret,
+    key: geddy.config.s3.key,
+    bucket: geddy.config.s3.bucket,
+    region: geddy.config.s3.region,
+    tempPath: 'temp',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 200,
+        height: 200
+      },
+      {
+        name: 'small',
+        width: 500,
+        height: 500
+      }
+    ],
+    parallel: 10
+  }, function() {
+    console.log('S3 initialized.');
+  });
+
   // Create reusable transport method (opens pool of SMTP connections)
   geddy.smtpTransport = nodemailer.createTransport("SMTP", geddy.config.mailer.transport.options);
 
