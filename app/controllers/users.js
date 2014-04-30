@@ -1,7 +1,9 @@
 var passport = require('../helpers/passport')
   , generateHash = passport.generateHash
-  , requireAuth = passport.requireAuth;
-
+  , requireAuth = passport.requireAuth
+  , removeFieldsFromUser = require('../helpers/general').removeFieldsFromUser
+  , removeFieldsFromUsers = require('../helpers/general').removeFieldsFromUsers
+  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts;
 
 var Users = function () {
 
@@ -33,6 +35,7 @@ var Users = function () {
     var self = this;
 
     geddy.model.User.all(function(err, users) {
+      users = removeFieldsFromUsers(users);
       self.respond({params: params, users: users});
     });
   };
@@ -176,7 +179,8 @@ var Users = function () {
       }
       else {
         user.getPosts({}, postsOptions, function (err, posts) {
-          user.password = '';
+          user = removeFieldsFromUser(user);
+          posts = removeUserFieldsFromPosts(posts);
           self.respond({user: user, posts: posts});
         });
       }

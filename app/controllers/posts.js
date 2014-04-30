@@ -1,7 +1,9 @@
 var passport = require('../helpers/passport')
   , requireAuth = passport.requireAuth
   , addUploadToPost = require('../helpers/files').addUploadToPost
-  , removeUpload = require('../helpers/files').removeUpload;
+  , removeUpload = require('../helpers/files').removeUpload
+  , removeUserFieldsFromPost = require('../helpers/general').removeUserFieldsFromPost
+  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts;
 
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -35,7 +37,9 @@ var Posts = function () {
       if (err) {
         throw err;
       }
-      console.log(posts);
+
+      posts = removeUserFieldsFromPosts(posts);
+
       self.respondWith(posts, {type:'Post'});
     });
   };
@@ -102,6 +106,7 @@ var Posts = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
+        post = removeUserFieldsFromPost(post);
         self.respond({post: post, commentsCollapse: 'in'});
       }
     });

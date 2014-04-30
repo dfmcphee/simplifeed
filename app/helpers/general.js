@@ -54,5 +54,67 @@ exports.uniqid = function (prefix, more_entropy) {
 };
 
 exports.autoLink = function() {
-  
-}
+
+};
+
+exports.removeUserFieldsFromPosts = function(posts) {
+  for (var i=0; i < posts.length; i++) {
+    if (posts[i].user) {
+      delete posts[i].user.password;
+      delete posts[i].user.activationToken;
+      delete posts[i].user.activatedAt;
+      delete posts[i].user.emailNotifications;
+    }
+
+    if (posts[i].comments) {
+      for (var j=0; j < posts[i].comments.length; j++) {
+        delete posts[i].comments[j].user.password;
+        delete posts[i].comments[j].user.activationToken;
+        delete posts[i].comments[j].user.activatedAt;
+        delete posts[i].comments[j].user.emailNotifications;
+      }
+    }
+  }
+
+  return posts;
+};
+
+exports.removeUserFieldsFromPost = function(post) {
+  if (post.user) {
+    delete post.user.password;
+    delete post.user.activationToken;
+    delete post.user.activatedAt;
+    delete post.user.emailNotifications;
+  }
+
+  if (post.comments) {
+    for (var i=0; i < post.comments.length; i++) {
+      delete post.comments[i].user.password;
+      delete post.comments[i].user.activationToken;
+      delete post.comments[i].user.activatedAt;
+      delete post.comments[i].user.emailNotifications;
+    }
+  }
+
+  return post;
+};
+
+exports.removeFieldsFromUser = function(user) {
+  delete user.password;
+  delete user.activationToken;
+  delete user.activatedAt;
+  delete user.emailNotifications;
+
+  return user;
+};
+
+exports.removeFieldsFromUsers = function(users) {
+  for (var i=0; i < users.length; i++) {
+    delete users[i].password;
+    delete users[i].activationToken;
+    delete users[i].activatedAt;
+    delete users[i].emailNotifications;
+  }
+
+  return users;
+};
