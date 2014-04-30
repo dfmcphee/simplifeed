@@ -18,28 +18,30 @@
       <%= partial('/posts/files', {files: post.files}); %>
     <% } %>
   </div>
-  <div class="media-toolbar pull-right">
-    <button class="comment btn btn-circle" data-toggle="collapse" data-target="#comments-<%= post.id %>"><i class="glyphicon glyphicon-comment"></i></button>
-    <% if (post.comments) { %>
-      <span class="badge badge-circle comment-count"><%= post.comments.length %></span>
-    <% } else { %>
-      <span class="badge badge-circle comment-count">0</span>
-    <% } %>
-    <% if (geddy.model.Post.alreadyLiked(post, session.get('userId'))) { %>
-      <button class="unlike btn btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
-    <% } else { %>
-      <button class="like btn btn-circle"><i class="glyphicon glyphicon-heart-empty"></i></button>
-    <% } %>
-    <% if (post.likes) { %>
-      <span class="badge badge-circle like-count"><%= post.likes.length %></span>
-    <% } else { %>
-      <span class="badge badge-circle like-count">0</span>
-    <% } %>
+  <div class="media-toolbar clearfix">
+    <div class="post-actions pull-right">
+      <button class="comment btn btn-circle" data-toggle="collapse" data-target="#comments-<%= post.id %>"><i class="glyphicon glyphicon-comment"></i></button>
+      <% if (post.comments) { %>
+        <span class="badge badge-circle comment-count"><%= post.comments.length %></span>
+      <% } else { %>
+        <span class="badge badge-circle comment-count">0</span>
+      <% } %>
+      <% if (geddy.model.Post.alreadyLiked(post, session.get('userId'))) { %>
+        <button class="unlike btn btn-circle"><i class="glyphicon glyphicon-heart"></i></button>
+      <% } else { %>
+        <button class="like btn btn-circle"><i class="glyphicon glyphicon-heart-empty"></i></button>
+      <% } %>
+      <% if (post.likes) { %>
+        <span class="badge badge-circle like-count"><%= post.likes.length %></span>
+      <% } else { %>
+        <span class="badge badge-circle like-count">0</span>
+      <% } %>
+    </div>
   </div>
-  <div id="comments-<%= post.id %>" class="collapse comments clearfix">
+  <div id="comments-<%= post.id %>" class="collapse comments clearfix <%= commentsCollapse %>">
+    <hr/>
     <div class="row">
       <div class="col-sm-8 col-sm-offset-4">
-        <hr/>
         <div class="comment-list">
           <% if (post.comments) { %>
             <% for (var i=0; i < post.comments.length; i++) { %>

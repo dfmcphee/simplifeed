@@ -1,4 +1,4 @@
-<div id="comment-<%= comment.id %>" data-comment-id="<%= comment.id %>" class="media">
+<div id="comment-<%= comment.id %>" data-comment-id="<%= comment.id %>" class="media comment">
   <div class="pull-left">
     <img class="media-object" src="<%= avatar %>" alt="<%= user.username %>">
   </div>
@@ -7,5 +7,5 @@
     <h2 class="media-heading"><a href="/users/<%= user.id %>"><%= user.username %></a></h2>
     <p class="lead"><%= comment.content %></p>
   </div>
+  <hr/>
 </div>
-<hr/>

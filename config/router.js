@@ -56,7 +56,7 @@ router.post('/posts/:id/unlike(.:format)').to('Likes.remove');
 
 router.post('/posts/:id/comment(.:format)').to('Comments.create');
 router.put('/comments/:id(.:format)').to('Comments.update');
-router.post('/comments/:id(.:format)').to('Comments.remove');
+router.del('/comments/:id(.:format)').to('Comments.remove');
 
 router.post('/files/upload').to('Files.create');
 router.put('/files/:id/update(.:format)').to('Files.update');

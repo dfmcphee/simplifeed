@@ -5857,6 +5857,32 @@ body {
 .media .media-toolbar {
   margin-top: 10px;
 }
+.media .comment-list .comment {
+  margin-top: 5px;
+  padding: 7px;
+}
+.media .comment-list .comment img.media-object {
+  max-width: 80px;
+}
+.media .comment-list .comment h2.media-heading {
+  font-size: 20px;
+}
+.media .comment-list .comment p.lead {
+  font-size: 16px;
+}
+.media .comment-list .comment .edit-comment {
+  cursor: pointer;
+}
+.media .comment-list .comment .edit-comment-container div {
+  margin-top: 10px;
+}
+.media .comment-list .comment .edit-comment-container button {
+  margin-left: 10px;
+}
+.media .comment-list .comment hr {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
 #notifications li {
   padding: 5px;
 }

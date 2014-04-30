@@ -102,7 +102,7 @@ var Posts = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        self.respondWith(post);
+        self.respond({post: post, commentsCollapse: 'in'});
       }
     });
   };

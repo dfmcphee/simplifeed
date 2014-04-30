@@ -10,7 +10,7 @@ var Comments = function () {
   this.create = function (req, resp, params) {
     var self = this;
 
-    geddy.model.Post.first(params.id, {includes: ['user']}, function(err, post) {
+    geddy.model.Post.first(params.id, {includes: {'user': null, 'comments': 'user'}}, function(err, post) {
       geddy.model.User.first(self.session.get('userId'), function(err, user) {
         if (err) {
           throw err;
@@ -27,6 +27,18 @@ var Comments = function () {
             '/posts/' + post.id,
             post.user
           );
+        }
+
+        if (post.comments) {
+          for (var i=0; i < post.comments.length; i++){
+            if (post.comments[i].user.id !== user.id && post.comments[i].user.id !== post.userId) {
+              geddy.model.Notification.createAndSend(
+                user.fullName() + ' also commented on a post.',
+                '/posts/' + post.id,
+                post.comments[i].user
+              );
+            }
+          }
         }
 
         var avatar = getAvatar(user);
@@ -63,7 +75,7 @@ var Comments = function () {
             if (err) {
               throw err;
             }
-            self.respondWith(comment, {status: err});
+            self.respond({success: true}, {format: 'json'});
           });
         }
       }
@@ -86,7 +98,7 @@ var Comments = function () {
           if (err) {
             throw err;
           }
-          self.respondWith(comment);
+          self.respond({success: true}, {format: 'json'});
         });
       }
     });

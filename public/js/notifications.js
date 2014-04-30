@@ -11,9 +11,7 @@ $(document).ready(function() {
           unreadCount++;
         }
 
-        notifications += '<li id="notification-' + notification.id +
-        '" class="' + unreadClass + '"><a data-id="' + notification.id + '" data-href="' +
-        notification.link + '">' + notification.content + '</a></li>';
+        notifications += new EJS({url: '/js/templates/notification.ejs'}).render({notification: notification, unread: unreadClass});
       });
       $('#notifications').append(notifications);
 

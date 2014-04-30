@@ -1,13 +1,13 @@
-<div id="comment-<%= comment.id; %>" data-comment-id="<%= comment.id %>" class="media">
+<div id="comment-<%= comment.id; %>" data-comment-id="<%= comment.id %>" class="media comment">
   <div class="pull-left">
     <img class="media-object" src="<%= getAvatar(comment.user); %>" alt="<%= comment.user.username; %>">
   </div>
   <div class="media-body">
     <% if (session.get('userId') === comment.userId) { %>
-      <a class="pull-right edit-comment" data-comment-id="<%= comment.id %>">Edit</a>
+      <a class="pull-right edit-comment">Edit</a>
     <% } %>
     <h2 class="media-heading"><a href="/users/<%= comment.user.id %>"><%= comment.user.username; %></a></h2>
     <p class="lead"><%= comment.content %></p>
   </div>
+  <hr/>
 </div>
-<hr/>

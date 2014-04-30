@@ -40,31 +40,4 @@ $(document).ready(function() {
         }
     });
   });
-
-  $('.comments').on('click', '.add-comment', function(e) {
-    var commentButton = this;
-    var postId = $(commentButton).closest('.media').data('post-id');
-    var content = $(commentButton).closest('.comments').find('.comment-input').val();
-
-    if (content && content !== '') {
-      $.ajax({
-          url: '/posts/' + postId + '/comment',
-          type: 'POST',
-          data: 'content=' + content,
-          success: function(data) {
-            if (data && data.success) {
-              var html = new EJS({url: '/js/templates/comment.ejs'}).render({
-                comment: data.comment,
-                user: data.user,
-                avatar: data.avatar
-              });
-              $(commentButton).closest('.comments').find('.comment-list').append(html);
-              var count = Number($(commentButton).closest('.media-toolbar').find('.comment-count').text());
-              $(commentButton).closest('.media-toolbar').find('.comment-count').html(count + 1);
-              $(commentButton).closest('.comments').find('.comment-input').val('');
-            }
-          }
-      });
-    }
-  });
 });
