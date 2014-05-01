@@ -1,12 +1,14 @@
 /* Styles */
 
 @import "bootstrap/bootstrap.less";
+@import "font-awesome/font-awesome.less";
 @import "typography.less";
 @import "buttons.less";
 @import "posts.less";
 @import "notifications.less";
 @import "uploads.less";
 @import "profile.less";
+@import "docs.less";
 @import "justifiedGallery.less";
 @import "lightbox.less";
 @import "liveurl.less";
@@ -30,4 +32,21 @@ body {
 
 .well {
   background: #fff;
+}
+
+div.jumbotron {
+  background: url(/img/trianglify-background-purple.svg);
+  background-size: cover;
+  border-radius: 0px;
+  display: block;
+  color: white;
+  margin-top: -20px;
+
+  h1 {
+    font-weight: 700;
+  }
+}
+
+.featurette-image {
+  border-radius: 20px;
 }

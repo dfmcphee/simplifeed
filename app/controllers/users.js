@@ -166,8 +166,16 @@ var Users = function () {
     var userOptions = {};
 
     var postsOptions = {
-      includes: ['user', 'files'],
-      sort: {createdAt: 'desc'}
+      includes: {
+        'user': null,
+        'files': null,
+        'likes': null,
+        'comments': 'user'
+      },
+      sort: {
+          createdAt: 'desc'
+        , 'comments.createdAt': 'asc'
+      }
     };
 
     geddy.model.User.first(params.id, userOptions, function(err, user) {

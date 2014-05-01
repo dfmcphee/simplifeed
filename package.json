@@ -14,7 +14,8 @@
     "pg": "2.5.x",
     "uploadfs": "*",
     "formidable": "*",
-    "moment": "*"
+    "moment": "*",
+    "aglio": "*"
   },
   "devDependencies": {},
   "engines": {

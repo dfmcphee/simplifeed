@@ -76,7 +76,12 @@ var Posts = function () {
             if (err) {
               throw err;
             }
-            self.redirect('/posts');
+
+            if (params.format && params.format === 'json') {
+              self.respond(post, {format: 'json'});
+            } else {
+              self.redirect('/posts');
+            }
           });
         }
       });
@@ -107,7 +112,11 @@ var Posts = function () {
       }
       else {
         post = removeUserFieldsFromPost(post);
-        self.respond({post: post, commentsCollapse: 'in'});
+        var response = {post: post, commentsCollapse: 'in'};
+        if (params.format && params.format === 'json') {
+          response = post;
+        }
+        self.respond(response);
       }
     });
   };
@@ -209,7 +218,11 @@ var Posts = function () {
           if (err) {
             throw err;
           }
-          self.redirect('/posts');
+          if (params.format && params.format === 'json') {
+            self.respond(post, {format: 'json'});
+          } else {
+            self.redirect('/posts');
+          }
         });
       }
     });

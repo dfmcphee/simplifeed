@@ -65,4 +65,6 @@ router.del('/files/:id(.:format)').to('Files.remove');
 router.get('/notifications(.:format)').to('Notifications.index');
 router.put('/notifications/:id/read(.:format)').to('Notifications.read');
 
+router.get('/docs').to('Docs.index');
+
 exports.router = router;
