@@ -68,4 +68,27 @@ Notification.createAndSend = function (content, link, user) {
   }
 };
 
+Notification.createAndSendToAll = function (content, link, sender) {
+  geddy.model.User.all({id: {ne: sender}, emailNotifications: true}, function(err, users) {
+    for (var i=0; i < users.length; i++) {
+      if (err) {
+        throw err;
+      }
+
+      var mailHtml = content + ' ' + '<a href="' + geddy.config.fullHostname + '/' + link + '">View</a>.';
+      var mailText = content + geddy.config.fullHostname + '/' + link + '.';
+
+      var mailOptions = {
+        from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,
+        to: users[i].email,
+        subject: content,
+        html: mailHtml,
+        text: mailText
+      };
+
+      geddy.sendMail(mailOptions);
+    }
+  });
+};
+
 Notification = geddy.model.register('Notification', Notification);

@@ -68,6 +68,20 @@ var Posts = function () {
             var keys = Object.keys(params.uploads);
             var i = 0;
 
+            if (keys.length > 1) {
+              geddy.model.Notification.createAndSendToAll(
+                user.fullName() + ' posted an album to ' + geddy.config.appName,
+                'posts/' + post.id,
+                self.session.get('userId')
+              );
+            } else {
+              geddy.model.Notification.createAndSendToAll(
+                user.fullName() + ' posted a photo to ' + geddy.config.appName,
+                'posts/' + post.id,
+                self.session.get('userId')
+              );
+            }
+
             addUploadToPost(i, keys, params.uploads, post, self);
           });
         }
@@ -76,6 +90,12 @@ var Posts = function () {
             if (err) {
               throw err;
             }
+
+            geddy.model.Notification.createAndSendToAll(
+              user.fullName() + ' posted to ' + geddy.config.appName,
+              'posts/' + post.id,
+              self.session.get('userId')
+            );
 
             if (params.format && params.format === 'json') {
               self.respond(post, {format: 'json'});
