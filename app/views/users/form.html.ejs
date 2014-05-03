@@ -3,13 +3,13 @@
     <div class="well">
       <div class="form-group <%= fieldClass(errors, 'username') %>">
         <label for="username" class="control-label">* Username</label>
-        <%- contentTag('input', user.username, {type:'text', class:'form-control', name:'username'}) %>
+        <%- contentTag('input', user.username, {type:'text', class:'form-control', autocorrect: 'off', autocapitalize:'off', spellcheck:'false', name:'username'}) %>
         <%- fieldMessage(errors, 'username'); %>
       </div>
 
       <div class="form-group <%= fieldClass(errors, 'email') %>">
         <label for="email" class="control-label">* Email</label>
-        <%- contentTag('input', user.email, {type:'text', class:'form-control', name:'email'}) %>
+        <%- contentTag('input', user.email, {type:'email', class:'form-control', name:'email'}) %>
         <%- fieldMessage(errors, 'email'); %>
       </div>
 

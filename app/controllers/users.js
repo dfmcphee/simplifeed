@@ -295,9 +295,9 @@ var Users = function () {
             encodeURIComponent(token);
 
         geddy.sendMail({
-          from: "McFeed <noreply@mcfeed.me>", // sender address
+          from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
           to: user.fullName() + ' <' + user.email + '>', // comma separated list of receivers
-          subject: "McFeed Password Reset", // Subject line
+          subject: geddy.config.appName + " Password Reset", // Subject line
           text: 'You requested to reset your password. Please go to ' + resetURL + ' to reset your password.',
           html: 'You requested to reset your password. Please go <a href="' + resetURL + '">here</a> to reset your password.'
         });
@@ -350,6 +350,41 @@ var Users = function () {
           }
         });
       }
+    });
+  };
+
+  this.invite = function (req, resp, params) {
+    this.respond({params: params});
+  };
+
+  this.sendInvite = function (req, resp, params) {
+    var self = this;
+
+    geddy.model.User.first(self.session.get('userId'), function(err, sender) {
+      geddy.model.User.first({email: params.email}, function(err, user) {
+        if (err) {
+          params.errors = err;
+          self.transfer('invite');
+        }
+        else if (user) {
+          params.errors = ['There is already a member with that email address.'];
+          self.transfer('invite');
+        }
+        else {
+          var signupURL = geddy.config.fullHostname + '/users/add?sitePassword=' + encodeURIComponent(geddy.config.password);
+
+          geddy.sendMail({
+            from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
+            to: params.email, // comma separated list of receivers
+            subject: 'You have been invited to ' + geddy.config.appName, // Subject line
+            text: sender.fullName() + ' has invited you to join ' + geddy.config.appName + ' please go to ' + signupURL + ' to sign up.',
+            html: sender.fullName() + ' has invited you to join ' + geddy.config.appName + ' please go <a href="' + signupURL + '">here</a> to sign up.'
+          });
+
+          self.flash.success('An invitation has been sent to the email address you provided.');
+          self.transfer('invite');
+        }
+      });
     });
   };
 };

@@ -53,6 +53,8 @@ router.get('/forgot-password').to('Users.forgotPassword');
 router.post('/reset-password').to('Users.resetPassword');
 router.get('/set-password').to('Users.setPassword');
 router.post('/update-password').to('Users.updatePassword');
+router.get('/invite').to('Users.invite');
+router.post('/send-invite').to('Users.sendInvite');
 
 router.resource('posts');
 

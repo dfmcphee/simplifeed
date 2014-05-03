@@ -6,11 +6,15 @@
 
         <% var errors = (((typeof(user) !== 'undefined') && user.errors) ? user.errors : {}); %>
 
+        <% if (!params.sitePassword) { %>
         <div class="form-group <%= fieldClass(errors, 'sitePassword') %>">
           <label for="email" class="control-label">* Site Password</label>
           <%- contentTag('input', params.sitePassword, {type:'text', class:'form-control', name:'sitePassword'}) %>
           <%- fieldMessage(errors, 'sitePassword'); %>
         </div>
+        <% } else { %>
+          <%- contentTag('input', params.sitePassword, {type:'hidden', name:'sitePassword'}) %>
+        <% } %>
 
         <%- partial('form', {user: params, errors: errors}) %>
 

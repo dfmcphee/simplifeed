@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <form id="password-reset-form" role="form" action="/reset-password" method="POST">
+      <form id="password-reset-form" role="form" action="/send-invite" method="POST">
         <fieldset>
-          <legend>Reset your password</legend>
+          <legend>Invite someone</legend>
           <% if (params.errors) { %>
           <div class="form-group">
             <% for(var err in params.errors) { %>
@@ -15,7 +15,7 @@
             <%- contentTag('input', '', {type:'email', class:'form-control', name:'email'}) %>
           </div>
           <div class="well form-actions">
-            <%- contentTag('input', 'Reset', {type: 'submit', class: 'btn btn-primary'}) %>
+            <%- contentTag('input', 'Send', {type: 'submit', class: 'btn btn-primary'}) %>
           </div>
         </fieldset>
       </form>
