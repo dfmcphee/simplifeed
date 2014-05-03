@@ -10,6 +10,7 @@
     "passport-facebook": "0.1.x",
     "passport-yammer": "0.1.x",
     "bcrypt": "0.7.x",
+    "hat": "*",
     "nodemailer": "*",
     "pg": "2.5.x",
     "uploadfs": "*",

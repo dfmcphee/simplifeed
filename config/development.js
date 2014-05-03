@@ -17,7 +17,7 @@
 */
 
 var config = {
-  appName: 'Simplifeed (development)'
+  appName: 'Simplifeed'
 , detailedErrors: true
 , debug: true
 , hostname: 'localhost'

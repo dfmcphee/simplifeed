@@ -49,6 +49,11 @@ router.get('/auth/facebook').to('Auth.facebook');
 router.get('/auth/facebook/callback').to('Auth.facebookCallback');
 
 router.resource('users');
+router.get('/forgot-password').to('Users.forgotPassword');
+router.post('/reset-password').to('Users.resetPassword');
+router.get('/set-password').to('Users.setPassword');
+router.post('/update-password').to('Users.updatePassword');
+
 router.resource('posts');
 
 router.post('/posts/:id/like(.:format)').to('Likes.create');

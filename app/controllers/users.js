@@ -1,5 +1,6 @@
 var passport = require('../helpers/passport')
   , generateHash = passport.generateHash
+  , hat = require('hat')
   , requireAuth = passport.requireAuth
   , removeFieldsFromUser = require('../helpers/general').removeFieldsFromUser
   , removeFieldsFromUsers = require('../helpers/general').removeFieldsFromUsers
@@ -26,7 +27,7 @@ var Users = function () {
   }
 
   this.before(requireAuth, {
-    except: ['add', 'create', 'activate']
+    except: ['add', 'create', 'activate', 'forgotPassword', 'resetPassword', 'setPassword', 'updatePassword']
   });
 
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -270,6 +271,87 @@ var Users = function () {
     });
   };
 
+  this.forgotPassword = function (req, resp, params) {
+    this.respond({params: params});
+  };
+
+  this.resetPassword = function (req, resp, params) {
+    var self = this;
+
+    geddy.model.User.first({email: params.email}, function(err, user) {
+      if (err) {
+        params.errors = err;
+        self.transfer('forgotPassword');
+      }
+      else if (!user) {
+        params.errors = ['No user found with that email.'];
+        self.transfer('forgotPassword');
+      } else {
+        var token = hat();
+
+        user.activationToken = token;
+
+        var resetURL = geddy.config.fullHostname + '/set-password?token=' +
+            encodeURIComponent(token);
+
+        geddy.sendMail({
+          from: "McFeed <noreply@mcfeed.me>", // sender address
+          to: user.fullName() + ' <' + user.email + '>', // comma separated list of receivers
+          subject: "McFeed Password Reset", // Subject line
+          text: 'You requested to reset your password. Please go to ' + resetURL + ' to reset your password.',
+          html: 'You requested to reset your password. Please go <a href="' + resetURL + '">here</a> to reset your password.'
+        });
+
+        user.save(function(err, data) {
+          if (err) {
+            params.errors = err;
+            self.transfer('forgotPassword');
+          }
+          else {
+            self.flash.success('An email has been sent with a link to reset your password.');
+            self.redirect({controller: self.name});
+          }
+        });
+      }
+    });
+  };
+
+  this.setPassword = function (req, resp, params) {
+    this.respond({params: params});
+  };
+
+  this.updatePassword = function (req, resp, params) {
+    var self = this;
+
+    geddy.model.User.first({activationToken: params.token}, function(err, user) {
+      if (err) {
+        params.errors = err;
+        self.transfer('setPassword');
+      }
+      else if (!user) {
+        params.errors = ['No user found with that token.'];
+        self.transfer('setPassword');
+      }
+      else if (params.password && params.password !== '' && params.password !== params.confirmPassword) {
+        params.errors = ['Password do not match.'];
+        self.transfer('setPassword');
+      } else {
+        user.activationToken = null;
+        user.password = generateHash(params.password);
+
+        user.save(function(err, data) {
+          if (err) {
+            params.errors = err;
+            self.transfer('forgotPassword');
+          }
+          else {
+            self.flash.success('Your password has been successfully reset.');
+            self.redirect({controller: self.name});
+          }
+        });
+      }
+    });
+  };
 };
 
 exports.Users = Users;

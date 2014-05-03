@@ -7545,6 +7545,16 @@ div.jumbotron h1 {
 div.jumbotron p {
   text-shadow: 0px -1px 0px #303030;
 }
+div.jumbotron a {
+  color: #fff;
+}
+div.jumbotron a:hover {
+  text-decoration: none;
+  color: #eee;
+}
+div.jumbotron a.btn-default {
+  color: #1b1b1b;
+}
 .featurette-image {
   border-radius: 20px;
 }
