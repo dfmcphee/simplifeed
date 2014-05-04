@@ -7200,7 +7200,7 @@ body {
   margin-right: 30px;
 }
 .media img.media-object {
-  max-width: 120px;
+  max-height: 120px;
 }
 .media .single {
   text-align: center;
