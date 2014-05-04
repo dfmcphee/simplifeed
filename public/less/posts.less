@@ -15,6 +15,15 @@
       color: #3b3b3b;
     }
 
+    div.media-image {
+      margin-right: 10px;
+      max-width: 120px;
+      max-height: 120px;
+      border-radius: 120px;
+      overflow: hidden;
+      margin-right: 30px;
+    }
+
     img.media-object {
       max-width: 120px;
     }
@@ -22,6 +31,9 @@
     .single {
       text-align:center;
       max-width: 100%;
+      background: #f8f8f8;
+      padding: 15px 10px;
+      border-radius: 10px;
     }
 
     .media-body abbr {
@@ -31,6 +43,11 @@
 
     .media-toolbar {
       margin-top:10px;
+    }
+
+    hr {
+      margin-top:20px;
+      margin-bottom:20px;
     }
 
     .comment-list {
@@ -64,9 +81,34 @@
         }
 
         hr {
-          margin-top:40px;
+          margin-top:20px;
           margin-bottom:10px;
         }
       }
     }
+}
+
+@media (max-width: @screen-xs-max) {
+  .media {
+    div.media-image {
+      margin-top: 30px;
+      max-width: 60px;
+
+      img {
+        max-width: 60px;
+      }
+    }
+
+    .media-heading {
+      margin-top:30px;
+    }
+
+    .single {
+      text-align:center;
+      max-width: 100%;
+      background: transparent;
+      padding: 0px;
+      border-radius: 0px;
+    }
+  }
 }

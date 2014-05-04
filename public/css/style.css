@@ -7183,12 +7183,23 @@ body {
 .media .post-actions:hover {
   color: #3b3b3b;
 }
+.media div.media-image {
+  margin-right: 10px;
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 120px;
+  overflow: hidden;
+  margin-right: 30px;
+}
 .media img.media-object {
   max-width: 120px;
 }
 .media .single {
   text-align: center;
   max-width: 100%;
+  background: #f8f8f8;
+  padding: 15px 10px;
+  border-radius: 10px;
 }
 .media .media-body abbr {
   margin-top: 2px;
@@ -7196,6 +7207,10 @@ body {
 }
 .media .media-toolbar {
   margin-top: 10px;
+}
+.media hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .media .comment-list .comment {
   margin-top: 5px;
@@ -7220,8 +7235,27 @@ body {
   margin-left: 10px;
 }
 .media .comment-list .comment hr {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .media div.media-image {
+    margin-top: 30px;
+    max-width: 60px;
+  }
+  .media div.media-image img {
+    max-width: 60px;
+  }
+  .media .media-heading {
+    margin-top: 30px;
+  }
+  .media .single {
+    text-align: center;
+    max-width: 100%;
+    background: transparent;
+    padding: 0px;
+    border-radius: 0px;
+  }
 }
 #notifications li {
   padding: 5px;
@@ -7248,6 +7282,23 @@ body {
 }
 #post-uploads .upload input[type="text"] {
   width: 90%;
+}
+#post-uploads .upload hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+#profile-photo {
+  margin-right: 10px;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 200px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+#profile-photo img {
+  max-width: 200px;
 }
 .profile-photo-container {
   position: relative;

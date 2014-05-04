@@ -60,7 +60,7 @@ var Posts = function () {
         if (err) {
           throw err;
         }
-
+        self.flash.success('Post created.');
         post.setUser(user);
 
         if (params.uploads) {
@@ -115,7 +115,7 @@ var Posts = function () {
       includes: {
         'user': null,
         'files': null,
-        'likes': null,
+        'likes': 'user',
         'comments': 'user'
       },
       sort: {
@@ -178,6 +178,7 @@ var Posts = function () {
           if (err) {
             throw err;
           }
+          self.flash.success('Post updated.');
           self.respondWith(post, {status: err});
         });
       }

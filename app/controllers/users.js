@@ -126,6 +126,7 @@ var Users = function () {
             }
 
             else {
+              self.flash.success('Your account has been created. Please sign in now.');
               self.respondWith(user);
             }
           });
@@ -242,6 +243,8 @@ var Users = function () {
           if (err) {
             throw err;
           }
+
+          self.flash.success('Profile successfully updated.');
           self.respondWith(user, {status: err});
         });
       }
