@@ -53,8 +53,8 @@ Notification.createAndSend = function (content, link, user) {
   notification.save();
 
   if (user.emailNotifications) {
-    var mailHtml = content + ' ' + '<a href="' + geddy.config.fullHostname + '/' + link + '">View</a>.';
-    var mailText = content + geddy.config.fullHostname + '/' + link + '.';
+    var mailHtml = content + ' ' + '<a href="' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '">View</a>.';
+    var mailText = content + ' ' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '.';
 
     var mailOptions = {
       from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,
@@ -75,8 +75,8 @@ Notification.createAndSendToAll = function (content, link, sender) {
         throw err;
       }
 
-      var mailHtml = content + ' ' + '<a href="' + geddy.config.fullHostname + '/' + link + '">View</a>.';
-      var mailText = content + geddy.config.fullHostname + '/' + link + '.';
+      var mailHtml = content + ' ' + '<a href="' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '">View</a>.';
+      var mailText = content + ' ' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '.';
 
       var mailOptions = {
         from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,

@@ -1,6 +1,6 @@
 {
   "name": "simplifeed",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "author": "Dominic McPhee",
   "dependencies": {
     "socket.io": "~0.9.16",

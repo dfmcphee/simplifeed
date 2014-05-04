@@ -291,7 +291,7 @@ var Users = function () {
 
         user.activationToken = token;
 
-        var resetURL = geddy.config.fullHostname + '/set-password?token=' +
+        var resetURL = geddy.config.protocol + '://' + geddy.config.externalHost + '/set-password?token=' +
             encodeURIComponent(token);
 
         geddy.sendMail({
@@ -371,7 +371,7 @@ var Users = function () {
           self.transfer('invite');
         }
         else {
-          var signupURL = geddy.config.fullHostname + '/users/add?sitePassword=' + encodeURIComponent(geddy.config.password);
+          var signupURL = geddy.configprotocol + '://' + geddy.config.exteralHost + '/users/add?sitePassword=' + encodeURIComponent(geddy.config.password);
 
           geddy.sendMail({
             from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
