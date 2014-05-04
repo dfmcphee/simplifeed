@@ -2,7 +2,7 @@
   <div class="justified-gallery" >
     <% for (var i = 0; i < files.length; i++) { %>
       <a href="<%= files[i].full %>" class="lightbox">
-        <img src="<%= files[i].thumbnail %>" title="<%= files[i].title %>"/>
+        <img src="<%= files[i].small %>" title="<%= files[i].title %>"/>
       </a>
     <% } %>
   </div>

@@ -7297,6 +7297,11 @@ body {
   border: 0;
   border-top: 1px solid #ddd;
 }
+#profile-progress {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+}
 #profile-photo {
   margin-right: 10px;
   max-width: 200px;
