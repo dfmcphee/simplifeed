@@ -171,7 +171,7 @@ var Users = function () {
       includes: {
         'user': null,
         'files': null,
-        'likes': null,
+        'likes': 'user',
         'comments': 'user'
       },
       sort: {

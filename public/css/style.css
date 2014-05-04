@@ -7167,10 +7167,18 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
 }
+.badge-likes {
+  padding-top: 7px;
+  font-size: 0.8em;
+  color: #4b4b4b;
+  font-weight: 700;
+  margin: 0px;
+}
 .media {
   margin-top: 20px;
   background: #fff;
   padding: 15px;
+  overflow: visible;
 }
 .media .post-actions {
   color: #5b5b5b;
