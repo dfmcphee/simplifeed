@@ -12,6 +12,7 @@
     "bcrypt": "0.7.x",
     "hat": "*",
     "nodemailer": "*",
+    "email-templates": "*",
     "pg": "2.5.x",
     "uploadfs": "*",
     "formidable": "*",

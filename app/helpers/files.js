@@ -38,7 +38,7 @@ exports.removeUpload = function (filename) {
 };
 
 exports.getAvatar = function (user) {
-  var avatar = 'http://www.mrisug.org/Images/default.jpg';
+  var avatar = 'https://s3.amazonaws.com/simplifeed/placeholder.png';
   if (user.profileThumb && user.profileThumb !== '') {
     avatar = user.profileThumb;
   }

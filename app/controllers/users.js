@@ -4,7 +4,10 @@ var passport = require('../helpers/passport')
   , requireAuth = passport.requireAuth
   , removeFieldsFromUser = require('../helpers/general').removeFieldsFromUser
   , removeFieldsFromUsers = require('../helpers/general').removeFieldsFromUsers
-  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts;
+  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts
+  , path = require('path')
+  , templatesDir   = path.resolve(__dirname, '../views/', 'emails')
+  , emailTemplates = require('email-templates');
 
 var Users = function () {
 
@@ -297,12 +300,28 @@ var Users = function () {
         var resetURL = geddy.config.protocol + '://' + geddy.config.externalHost + '/set-password?token=' +
             encodeURIComponent(token);
 
-        geddy.sendMail({
-          from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
-          to: user.fullName() + ' <' + user.email + '>', // comma separated list of receivers
-          subject: geddy.config.appName + " Password Reset", // Subject line
-          text: 'You requested to reset your password. Please go to ' + resetURL + ' to reset your password.',
-          html: 'You requested to reset your password. Please go <a href="' + resetURL + '">here</a> to reset your password.'
+        emailTemplates(templatesDir, function(err, template) {
+          var locals = {
+            resetURL: resetURL,
+            email: user.email,
+            username: user.username,
+            subject: geddy.config.appName + " Password Reset"
+          };
+
+          template('password', locals, function(err, html, text) {
+            if (err) {
+              console.log(err);
+            } else {
+              geddy.sendMail({
+                from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
+                to: user.fullName() + ' <' + user.email + '>', // comma separated list of receivers
+                subject: geddy.config.appName + " Password Reset", // Subject line
+                text: null,
+                generateTextFromHTML: true,
+                html: html
+              });
+            }
+          });
         });
 
         user.save(function(err, data) {
@@ -374,14 +393,29 @@ var Users = function () {
           self.transfer('invite');
         }
         else {
-          var signupURL = geddy.configprotocol + '://' + geddy.config.exteralHost + '/users/add?sitePassword=' + encodeURIComponent(geddy.config.password);
+          var signupURL = geddy.config.protocol + '://' + geddy.config.externalHost + '/users/add?sitePassword=' + encodeURIComponent(geddy.config.password);
 
-          geddy.sendMail({
-            from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
-            to: params.email, // comma separated list of receivers
-            subject: 'You have been invited to ' + geddy.config.appName, // Subject line
-            text: sender.fullName() + ' has invited you to join ' + geddy.config.appName + ' please go to ' + signupURL + ' to sign up.',
-            html: sender.fullName() + ' has invited you to join ' + geddy.config.appName + ' please go <a href="' + signupURL + '">here</a> to sign up.'
+          emailTemplates(templatesDir, function(err, template) {
+            var locals = {
+              signupURL: signupURL,
+              appName: geddy.config.appName,
+              senderName: sender.fullName()
+            };
+
+            template('invite', locals, function(err, html, text) {
+              if (err) {
+                console.log(err);
+              } else {
+                geddy.sendMail({
+                  from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
+                  to: params.email, // comma separated list of receivers
+                  subject: 'You have been invited to ' + geddy.config.appName, // Subject line
+                  text: null,
+                  generateTextFromHTML: true,
+                  html: html
+                });
+              }
+            });
           });
 
           self.flash.success('An invitation has been sent to the email address you provided.');

@@ -15,6 +15,7 @@ $(document).ready(function() {
         change: function (e, data) {
           activeUploads += data.files.length;
           $('#progress').show();
+          $('body').append('<div id="imagelightbox-overlay"></div>');
         },
         done: function (e, data) {
           $.each(data.result.files, function (index, file) {
@@ -29,6 +30,7 @@ $(document).ready(function() {
 
             if (currentUpload++ === (activeUploads - 1)) {
               $('#progress').hide();
+              $('#imagelightbox-overlay').remove();
               activeUploads = 0;
             }
           });

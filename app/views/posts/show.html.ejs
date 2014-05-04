@@ -32,17 +32,22 @@
         <button class="like btn btn-circle"><i class="glyphicon glyphicon-heart-empty"></i></button>
       <% } %>
       <% if (post.likes) { %>
-        <span class="badge badge-circle like-count"></span>
         <span class="dropdown">
           <a data-toggle="dropdown" class="btn btn-circle badge-likes" href="#"><%= post.likes.length %></a>
           <ul class="dropdown-menu" role="menu">
             <% for (var i=0; i < post.likes.length; i++) { %>
-              <li><a href="#"><%= post.likes[i].user.username %> liked this.</a></li>
+              <% if (post.likes[i].user.id === session.get('userId')) { %>
+                <li><a>You liked this.</a></li>
+              <% } else { %>
+                <li><a><%= post.likes[i].user.givenName %> liked this.</a></li>
+              <% } %>
             <% } %>
           </ul>
         </span>
       <% } else { %>
-        <span class="badge badge-circle like-count">0</span>
+        <span class="dropdown">
+          <a data-toggle="dropdown" class="btn btn-circle badge-likes" href="#">0</a>
+        </span>
       <% } %>
     </div>
   </div>

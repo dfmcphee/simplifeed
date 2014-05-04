@@ -53,40 +53,70 @@ Notification.createAndSend = function (content, link, user) {
   notification.save();
 
   if (user.emailNotifications) {
-    var mailHtml = content + ' ' + '<a href="' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '">View</a>.';
-    var mailText = content + ' ' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '.';
+    var path = require('path')
+    , templatesDir = path.resolve(__dirname, '../views/', 'emails')
+    , emailTemplates = require('email-templates');
 
-    var mailOptions = {
-      from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,
-      to: user.email,
-      subject: content,
-      html: mailHtml,
-      text: mailText
-    };
+    emailTemplates(templatesDir, function(err, template) {
+      var locals = {
+        linkURL: geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link,
+        content: content,
+        email: user.email
+      };
 
-    geddy.sendMail(mailOptions);
+      template('notification', locals, function(err, html, text) {
+        if (err) {
+          console.log(err);
+        } else {
+          geddy.sendMail({
+            from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
+            to: locals.email, // comma separated list of receivers
+            subject: content, // Subject line
+            text: null,
+            generateTextFromHTML: true,
+            html: html
+          });
+        }
+      });
+    });
   }
 };
 
 Notification.createAndSendToAll = function (content, link, sender) {
+  var path = require('path')
+  , templatesDir = path.resolve(__dirname, '../views/', 'emails')
+  , emailTemplates = require('email-templates');
+  
   geddy.model.User.all({id: {ne: sender}, emailNotifications: true}, function(err, users) {
     for (var i=0; i < users.length; i++) {
       if (err) {
         throw err;
       }
 
-      var mailHtml = content + ' ' + '<a href="' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '">View</a>.';
-      var mailText = content + ' ' + geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link + '.';
+      email = users[i].email;
 
-      var mailOptions = {
-        from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,
-        to: users[i].email,
-        subject: content,
-        html: mailHtml,
-        text: mailText
-      };
+      emailTemplates(templatesDir, function(err, template) {
+        var locals = {
+          linkURL: geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link,
+          content: content,
+          email: email
+        };
 
-      geddy.sendMail(mailOptions);
+        template('notification', locals, function(err, html, text) {
+          if (err) {
+            console.log(err);
+          } else {
+            geddy.sendMail({
+              from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
+              to: locals.email, // comma separated list of receivers
+              subject: locals.content, // Subject line
+              text: null,
+              generateTextFromHTML: true,
+              html: html
+            });
+          }
+        });
+      });
     }
   });
 };

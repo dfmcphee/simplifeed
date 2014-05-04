@@ -13,8 +13,8 @@ $(document).ready(function() {
             $(likeButton).find('.glyphicon')
               .removeClass('glyphicon-heart-empty')
               .addClass('glyphicon-heart');
-            var count = Number($(likeButton).closest('.media-toolbar').find('.like-count').text());
-            $(likeButton).closest('.media-toolbar').find('.like-count').html(count + 1);
+            var count = Number($(likeButton).closest('.media-toolbar').find('.badge-likes').text());
+            $(likeButton).closest('.media-toolbar').find('.badge-likes').html(count + 1);
           }
         }
     });
@@ -34,8 +34,8 @@ $(document).ready(function() {
             $(likeButton).find('.glyphicon')
               .removeClass('glyphicon-heart')
               .addClass('glyphicon-heart-empty');
-            var count = Number($(likeButton).closest('.media-toolbar').find('.like-count').text());
-            $(likeButton).closest('.media-toolbar').find('.like-count').html(count - 1);
+            var count = Number($(likeButton).closest('.media-toolbar').find('.badge-likes').text());
+            $(likeButton).closest('.media-toolbar').find('.badge-likes').html(count - 1);
           }
         }
     });

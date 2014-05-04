@@ -7,10 +7,10 @@
     <div class="row">
       <% for (var i = 0; i < users.length; i++) { %>
         <div class="col-md-4">
-          <div class="media">
-            <a class="pull-left" href="#">
+          <div class="media clearfix">
+            <div class="pull-left media-image">
               <img class="media-object" src="<%= getAvatar(users[i]); %>" alt="<%= users[i].username %>">
-            </a>
+            </div>
             <div class="media-body">
               <h3 class="media-heading"><a href="<%= userPath(users[i].id) %>"><%= users[i].username %></a></h3>
               <p class="lead"><%= users[i].fullName() %></p>
