@@ -13,34 +13,59 @@ var Posts = function () {
   this.index = function (req, resp, params) {
     var self = this;
 
-    var limit = 10;
-    var skip = 0;
-
-    if (params.page) {
-      skip = (params.page * limit) - limit;
-    }
+    var pageLimit = 10;
+    var currentPage = params.currentPage || 0;
+    var skip = currentPage == 1 ? 0 : (currentPage * pageLimit);
+    params.currentPage = currentPage;
 
     var options = {
-      includes: {
-        'user': null,
-        'files': null,
-        'likes': 'user',
-        'comments': 'user'
-      },
+      skip: skip,
+      limit: pageLimit,
       sort: {
           createdAt: 'desc'
-        , 'comments.createdAt': 'asc'
       }
     };
 
-    geddy.model.Post.all({}, options, function(err, posts) {
-      if (err) {
-        throw err;
-      }
+    var db = geddy.model.loadedAdapters.Post.client;
 
-      posts = removeUserFieldsFromPosts(posts);
+    db.query('SELECT count(*) AS count FROM posts;', function (err, result) {
+        params.recordCount = result.rows[0].count;
+        params.totalPages = Math.round(params.recordCount / pageLimit);
 
-      self.respondWith(posts, {type:'Post'});
+        geddy.model.Post.all({}, options, function(err, posts) {
+          if (err) {
+            throw err;
+          }
+
+          var postIds = [];
+
+          for (var i=0; i < posts.length; i++) {
+            postIds.push(posts[i].id);
+          }
+
+          var options = {
+            includes: {
+              'user': null,
+              'files': null,
+              'likes': 'user',
+              'comments': 'user'
+            },
+            sort: {
+                createdAt: 'desc'
+              , 'comments.createdAt': 'asc'
+            }
+          };
+
+          geddy.model.Post.all({id: postIds}, options, function(err, posts) {
+            if (err) {
+              throw err;
+            }
+
+            posts = removeUserFieldsFromPosts(posts);
+
+            self.respond({posts: posts, params: params});
+          });
+        });
     });
   };
 
