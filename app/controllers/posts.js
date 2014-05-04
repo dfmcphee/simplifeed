@@ -13,12 +13,15 @@ var Posts = function () {
   this.index = function (req, resp, params) {
     var self = this;
 
-    var pageLimit = 10;
-    var currentPage = params.currentPage || 0;
-    var skip = currentPage == 1 ? 0 : (currentPage * pageLimit);
+    var pageLimit = 2;
+    var currentPage = Number(params.currentPage) || 1;
+    var skip = 0;
+    if (currentPage > 1){
+      skip = (currentPage * pageLimit) - pageLimit;
+    }
     params.currentPage = currentPage;
 
-    var options = {
+    var idsOptions = {
       skip: skip,
       limit: pageLimit,
       sort: {
@@ -32,7 +35,7 @@ var Posts = function () {
         params.recordCount = Number(result.rows[0].count);
         params.totalPages = Math.ceil(params.recordCount / pageLimit);
 
-        geddy.model.Post.all({}, options, function(err, posts) {
+        geddy.model.Post.all({}, idsOptions, function(err, posts) {
           if (err) {
             throw err;
           }
