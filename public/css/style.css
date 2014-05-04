@@ -7297,9 +7297,6 @@ body {
   overflow: hidden;
   margin-right: 20px;
 }
-#profile-photo img {
-  max-width: 200px;
-}
 .profile-photo-container {
   position: relative;
 }

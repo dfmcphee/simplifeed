@@ -47,8 +47,10 @@
   </div>
   <div class="col-sm-6">
     <div class="profile-photo-container well">
-      <div id="profile-photo">
-        <img src="<%= getAvatar(user); %>" alt="profile photo" />
+      <div id="profile-photo" class="media">
+        <div class="media-image">
+          <img src="<%= getAvatar(user); %>" class="media-object" alt="profile photo" />
+        </div>
       </div>
       <hr/>
       <span class="btn btn-success fileinput-button">

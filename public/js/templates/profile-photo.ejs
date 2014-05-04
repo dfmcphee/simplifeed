@@ -1,6 +1,7 @@
 <div class="media upload alert alert-default">
-  <button type="button" class="close btn-remove-profile-photo" data-action="<%= delete_url %>" aria-hidden="true">×</button>
-  <img class="media-object" src="<%= thumbnail_url %>" alt="Upload Thumbnail">
+  <div class="media-image">
+    <img class="media-object" src="<%= thumbnail_url %>" alt="Upload Thumbnail">
+  </div>
   <input type="hidden" name="profileImage" value="<%= url %>" />
   <input type="hidden" name="profileThumb" value="<%= thumbnail_url %>" />
   <input type="hidden" name="profileFile" value="<%= id %>" />
