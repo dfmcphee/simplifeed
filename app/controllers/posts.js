@@ -29,7 +29,7 @@ var Posts = function () {
     var db = geddy.model.loadedAdapters.Post.client;
 
     db.query('SELECT count(*) AS count FROM posts;', function (err, result) {
-        params.recordCount = result.rows[0].count;
+        params.recordCount = Number(result.rows[0].count);
         params.totalPages = Math.round(params.recordCount / pageLimit);
 
         geddy.model.Post.all({}, options, function(err, posts) {

@@ -8,14 +8,14 @@
       <% } %>
     </div>
     <% if (params.totalPages > 1) { %>
-    <ul class="pager">
-      <% if (Number(params.currentPage) !== 0) { %>
-        <li class="previous"><a href="/posts?currentPage=<%= Number(params.currentPage) -1 %>">&larr; Older</a></li>
-      <% } %>
-      <% if (Number(params.currentPage) !== (params.totalPages -1)) { %>
-        <li class="next"><a href="/posts?currentPage=<%= Number(params.currentPage) + 1 %>">Newer &rarr;</a></li>
-      <% } %>
-    </ul>
+      <ul class="pager">
+        <% if (Number(params.currentPage) !== 0) { %>
+          <li class="previous"><a href="/posts?currentPage=<%= Number(params.currentPage) -1 %>">&larr; Older</a></li>
+        <% } %>
+        <% if (Number(params.currentPage) !== (params.totalPages -1)) { %>
+          <li class="next"><a href="/posts?currentPage=<%= Number(params.currentPage) + 1 %>">Newer &rarr;</a></li>
+        <% } %>
+      </ul>
     <% } %>
   </div>
 </div>
