@@ -13,7 +13,7 @@ var Posts = function () {
   this.index = function (req, resp, params) {
     var self = this;
 
-    var pageLimit = 2;
+    var pageLimit = 10;
     var currentPage = Number(params.currentPage) || 1;
     var skip = 0;
     if (currentPage > 1){
