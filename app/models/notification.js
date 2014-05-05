@@ -86,38 +86,52 @@ Notification.createAndSendToAll = function (content, link, sender) {
   var path = require('path')
   , templatesDir = path.resolve(__dirname, '../views/', 'emails')
   , emailTemplates = require('email-templates');
-  
+
   geddy.model.User.all({id: {ne: sender}, emailNotifications: true}, function(err, users) {
-    for (var i=0; i < users.length; i++) {
+    if (err) {
+      throw err;
+    }
+    emailTemplates(templatesDir, function(err, template) {
       if (err) {
         throw err;
       }
+      var linkURL = geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link;
 
-      email = users[i].email;
-
-      emailTemplates(templatesDir, function(err, template) {
-        var locals = {
-          linkURL: geddy.config.protocol + '://' + geddy.config.externalHost + '/' + link,
-          content: content,
-          email: email
-        };
-
-        template('notification', locals, function(err, html, text) {
+      var Render = function(locals) {
+        this.locals = locals;
+        this.send = function(err, html, text) {
           if (err) {
             console.log(err);
           } else {
-            geddy.sendMail({
-              from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost, // sender address
-              to: locals.email, // comma separated list of receivers
-              subject: locals.content, // Subject line
-              text: null,
+            geddy.smtpTransport.sendMail({
+              from: geddy.config.mailer.fromAddressUsername + '@' + geddy.config.externalHost,
+              to: locals.email,
+              subject: content,
+              html: html,
               generateTextFromHTML: true,
-              html: html
+              text: null
+            }, function(err, responseStatus) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(responseStatus.message);
+              }
             });
           }
-        });
+        };
+        this.batch = function(batch) {
+          batch(this.locals, templatesDir, this.send);
+        };
+      };
+
+      // Load the template and send the emails
+      template('notification', true, function(err, batch) {
+        for(var user in users) {
+          var render = new Render({email: users[user].email, content: content, linkURL: linkURL});
+          render.batch(batch);
+        }
       });
-    }
+    });
   });
 };
 

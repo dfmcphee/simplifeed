@@ -127,6 +127,10 @@ var actions = new (function () {
           // No third-party auth tokens
           self.session.set('authData', {});
 
+          if (params.format && params.format === 'json') {
+            self.respond({success: true}, {format: 'json'});
+          }
+
           self.redirect(redirect);
         }
         else {
