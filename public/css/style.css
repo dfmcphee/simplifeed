@@ -7284,12 +7284,39 @@ body {
 #post-uploads {
   margin-top: 15px;
 }
+#post-uploads .upload-item {
+  width: 100%;
+}
+#post-uploads .dropzone {
+  background: #eee;
+  border: thin solid #ddd;
+  color: #ccc;
+  width: 100%;
+  border-radius: 15px;
+  padding: 30px 20px;
+  border-radius: 10px;
+}
+#post-uploads .dropzone i {
+  font-size: 2em;
+  margin-right: 10px;
+}
+#post-uploads .dropzone span {
+  vertical-align: super;
+}
+#post-uploads .dragging .dropzone {
+  color: #3b3b3b;
+}
 #post-uploads .upload {
   background: #eee;
   border: thin solid #ddd;
 }
-#post-uploads .upload input[type="text"] {
-  width: 90%;
+#post-uploads .upload textarea {
+  width: 95%;
+  border: #ccc;
+}
+#post-uploads .upload img.media-object {
+  max-height: 500px;
+  max-width: 265px;
 }
 #post-uploads .upload hr {
   margin-top: 10px;
@@ -7301,6 +7328,11 @@ body {
   position: absolute;
   top: 50%;
   right: 50%;
+}
+@media (max-width: 767px) {
+  .upload-item {
+    display: none;
+  }
 }
 #profile-photo {
   margin-right: 10px;

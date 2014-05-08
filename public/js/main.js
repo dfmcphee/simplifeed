@@ -9,6 +9,14 @@ var $container;
 var pageInitialized = false;
 var activeUploads = 0;
 var currentUpload = 0;
+var sizeRangeSuffixes = {
+  'lt100':'',
+  'lt240':'',
+  'lt320':'',
+  'lt500':'',
+  'lt640':'',
+  'lt1024':''
+};
 
 $(document).ready(function() {
   if (pageInitialized) {
@@ -17,15 +25,16 @@ $(document).ready(function() {
   pageInitialized = true;
 
   $('.justified-gallery').justifiedGallery({
-    sizeRangeSuffixes: {
-      'lt100':'',
-      'lt240':'',
-      'lt320':'',
-      'lt500':'',
-      'lt640':'',
-      'lt1024':''
-    }
+    sizeRangeSuffixes: sizeRangeSuffixes
   });
 
   $("abbr.timeago").timeago();
 });
+
+var getAvatar = function (user) {
+  var avatar = 'https://s3.amazonaws.com/simplifeed/placeholder.png';
+  if (user.profileThumb && user.profileThumb !== '') {
+    avatar = user.profileThumb;
+  }
+  return avatar;
+};

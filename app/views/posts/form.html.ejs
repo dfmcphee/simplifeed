@@ -7,6 +7,11 @@
 </div>
 
 <div id="post-uploads">
+  <div class="item upload-item">
+    <div class="alert alert-default dropzone">
+      <p><i class="fa fa-picture-o"></i> <span>Drag and drop photos here.</span></p>
+    </div>
+  </div>
   <% if (post.files) { %>
     <% for (var i=0; i < post.files.length; i++) { %>
       <%= partial('/posts/upload', {file: post.files[i]}); %>
@@ -15,7 +20,7 @@
 </div>
 
 <span class="btn btn-success fileinput-button">
-    <i class="glyphicon glyphicon-plus"></i>
-    <span>Add photos...</span>
+    <i class="fa fa-share-square-o"></i>
+    <span>Select photos</span>
     <input id="post-fileupload" type="file" name="files[]" data-url="/files/upload" multiple>
 </span>

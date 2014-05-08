@@ -1,12 +1,46 @@
 #post-uploads {
   margin-top: 15px;
 
+  .upload-item {
+    width: 100%;
+  }
+  .dropzone {
+    background: #eee;
+    border: thin solid #ddd;
+    color: #ccc;
+    width: 100%;
+    border-radius: 15px;
+    padding: 30px 20px;
+    border-radius: 10px;
+
+    i {
+      font-size: 2em;
+      margin-right:10px;
+    }
+
+    span {
+      vertical-align: super;
+    }
+  }
+
+  .dragging {
+    .dropzone {
+      color: #3b3b3b;
+    }
+  }
+
   .upload {
     background: #eee;
     border: thin solid #ddd;
 
-    input[type="text"] {
-      width: 90%;
+    textarea {
+      width: 95%;
+      border: #ccc;
+    }
+
+    img.media-object {
+      max-height: 500px;
+      max-width: 265px;
     }
 
     hr {
@@ -22,4 +56,10 @@
   position: absolute;
   top: 50%;
   right: 50%;
+}
+
+@media (max-width: @screen-xs-max) {
+  .upload-item {
+    display: none;
+  }
 }

@@ -29,6 +29,21 @@ geddy.model.Notification.on('update', function (item) {
   console.log(item);
 });
 
+geddy.io.addListenersForModels(['Post']);
+
+geddy.model.Post.on('save', function (item) {
+  setTimeout(function(){
+    $.getJSON( '/posts/' + item.id + '.json', function(data) {
+      var html = new EJS({url: '/js/templates/post.ejs'}).render({post: data});
+      $('#posts-list').prepend(html);
+      $('#post-' + item.id).fadeIn('slow');
+      $('#post-' + item.id + ' .justified-gallery').justifiedGallery({
+        sizeRangeSuffixes: sizeRangeSuffixes
+      });
+    });
+  }, 1000);
+});
+
 /*
  *  example:
  *

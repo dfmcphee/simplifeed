@@ -3,7 +3,7 @@
     <div id="posts-list">
       <% if (posts) { %>
         <% for (var i = 0; i < posts.length; i++) { %>
-          <%= partial('/posts/show', {post: posts[i], session: session, commentsCollapse: ''}); %>
+          <%= partial('/posts/post', {post: posts[i], session: session, commentsCollapse: ''}); %>
         <% } %>
       <% } %>
     </div>

@@ -1,18 +1,27 @@
+var jqXHR;
+
 $(document).ready(function() {
     $container = $('#post-uploads');
     $container.masonry({
-      "gutter": 10
+      "gutter": 10,
+      "columnWidth": 300
     });
     // layout Masonry again after all images have loaded
     $container.imagesLoaded( function() {
       $container.masonry({
-        "gutter": 10
+        "gutter": 10,
+        "columnWidth": 300
       });
     });
 
-    $('#post-fileupload').fileupload({
+    jqXHR = $('#post-fileupload').fileupload({
         dataType: 'json',
         change: function (e, data) {
+          activeUploads += data.files.length;
+          $('#progress').show();
+          $('body').append('<div id="imagelightbox-overlay"></div>');
+        },
+        drop: function (e, data) {
           activeUploads += data.files.length;
           $('#progress').show();
           $('body').append('<div id="imagelightbox-overlay"></div>');
@@ -35,6 +44,31 @@ $(document).ready(function() {
             }
           });
         }
+    });
+
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27) {
+        $('#imagelightbox-overlay').remove();
+        $('#progress').remove();
+        activeUploads = 0;
+        jqXHR.abort();
+      }
+    });
+
+
+    $("body").on("dragover", function(event) {
+
+      // Do something to UI to make page look droppable
+      $('.upload-item').addClass('dragging');
+
+      // Required for drop to work
+      return false;
+    });
+
+    $("body").on("dragleave", function(event) {
+
+      // Remove UI change
+      $('.upload-item').removeClass('dragging');
     });
 
     $('#post-fileupload').bind('fileuploadprogress', function (e, data) {

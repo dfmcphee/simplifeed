@@ -19,7 +19,7 @@ function addUpload(i, keys, uploads, post, self) {
           if (err) {
             throw err;
           }
-          self.respondWith(post, {status: err});
+          self.redirect('/posts');
         });
       } else {
         addUpload(i, keys, uploads, post, self);

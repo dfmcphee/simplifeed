@@ -88,7 +88,6 @@ var Posts = function () {
         if (err) {
           throw err;
         }
-        self.flash.success('Post created.');
         post.setUser(user);
 
         if (params.uploads) {

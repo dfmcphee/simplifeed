@@ -52,6 +52,7 @@ var Files = function () {
               files: [{
                 id: createdFile.id,
                 url: geddy.uploadfs.getUrl() + info.basePath + '.' + info.extension,
+                small_url: geddy.uploadfs.getUrl() + info.basePath + '.small.' + info.extension,
                 thumbnail_url: geddy.uploadfs.getUrl() + info.basePath + '.thumbnail.' + info.extension,
                 name: newFile,
                 type: file.type,

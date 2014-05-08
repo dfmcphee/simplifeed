@@ -1,0 +1,54 @@
+<div id="post-<%= post.id %>" data-post-id="<%= post.id %>" class="media" style="display:none;">
+  <div class="media-image pull-left">
+    <img class="media-object" src="<%= getAvatar(post.user) %>" alt="<%= post.user.username %>">
+  </div>
+  <div class="media-body">
+    <abbr class="timeago pull-right" title="<%= moment(post.createdAt).toISOString() %>"></abbr>
+    <h2 class="media-heading"><a href="/users/<%= post.user.id %>"><%= post.user.username %></a></h2>
+    <p class="lead"><%= post.content %></p>
+    <% if (post.files) { %>
+      <% if (post.files.length > 1) { %>
+        <div class="justified-gallery" >
+          <% for (var i = 0; i < post.files.length; i++) { %>
+            <a href="<%= post.files[i].full %>" class="lightbox">
+              <img src="<%= post.files[i].small %>" title="<%= post.files[i].title %>"/>
+            </a>
+          <% } %>
+        </div>
+      <% } else { %>
+        <div class="single">
+          <img src="<%= post.files[0].small %>" class="single" title="<%= post.files[0].title %>" />
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+  <div class="media-toolbar clearfix">
+    <div class="post-actions pull-right">
+      <button class="comment btn btn-circle" data-toggle="collapse" data-target="#comments-<%= post.id %>"><i class="glyphicon glyphicon-comment"></i></button>
+
+      <span class="badge badge-circle comment-count">0</span>
+
+      <button class="like btn btn-circle"><i class="glyphicon glyphicon-heart-empty"></i></button>
+
+      <span class="dropdown">
+        <a data-toggle="dropdown" class="btn btn-circle badge-likes" href="#">0</a>
+      </span>
+    </div>
+  </div>
+  <div id="comments-<%= post.id %>" class="collapse comments clearfix">
+    <hr/>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-4">
+        <div class="comment-list">
+
+        </div>
+
+        <div class="form-group">
+          <textarea class="comment-input form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-default add-comment">Comment</button>
+      </div>
+    </div>
+  </div>
+</div>
