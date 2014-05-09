@@ -12,7 +12,7 @@ var Docs = function () {
       }
 
       var blueprint = data.toString();
-      var template = 'default';
+      var template = '../../../app/views/docs/template';
 
       aglio.render(blueprint, template, function (err, html, warnings) {
           if (err) return console.log(err);

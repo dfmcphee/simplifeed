@@ -1,0 +1,367 @@
+//- Common mixins that templates can share
+
+mixin Nav(multipage)
+    div.col-md-3
+        nav#nav.hidden-sm.hidden-xs.affix.nav
+            if multipage
+                .list-group
+                    a.list-group-item.heading(href="#") Home
+            each resourceGroup in api.resourceGroups
+                .list-group
+                    a.list-group-item.heading(href="##{(multipage ? 'page:' : '') + slug(resourceGroup.name)}")
+                        = resourceGroup.name || 'Resource Group'
+                    each resource in resourceGroup.resources
+                        if !condenseNav || (resource.actions.length != 1)
+                            a.list-group-item(href="##{multipage ? 'page:' + slug(resourceGroup.name) + ',header:' : ''}#{slug(resourceGroup.name)}-#{slug(resource.name)}")
+                                i.fa.fa-bars
+                                | &nbsp;
+                                = resource.name || 'Resource'
+                            each action in resource.actions
+                                a.list-group-item(href="##{multipage ? 'page:' + slug(resourceGroup.name) + ',header:' : ''}#{slug(resourceGroup.name)}-#{slug(resource.name)}-#{slug(action.method)}", style="padding-left: 32px")
+                                    +Icon(action.method)
+                                    | &nbsp;
+                                    = action.name || action.method + ' ' + resource.uriTemplate
+                        else
+                            a.list-group-item(href="##{multipage ? 'page:' + slug(resourceGroup.name) + ',header:' : ''}#{slug(resourceGroup.name)}-#{slug(resource.name)}")
+                                - var action = resource.actions[0]
+                                +Icon(action.method)
+                                | &nbsp;
+                                = resource.name || action.name || action.method + ' ' + resource.uriTemplate
+            each meta in api.metadata
+                if meta.name == 'HOST'
+                    p(style="text-align: center")
+                        a(href=meta.value)= meta.value
+
+mixin Parameters(params)
+    ul.list-group
+        li.list-group-item.bg-default: strong Parameters
+        li.list-group-item
+            dl.dl-horizontal
+                each param in params
+                    dt= param.name
+                    dd
+                        code= param.type
+                        | &nbsp;
+                        if param.required
+                            span.required (required)
+                        else
+                            span (optional)
+                        | &nbsp;
+                        if param.default
+                            span.text-info.default
+                                strong Default:&nbsp;
+                                span= param.default
+                            | &nbsp;
+                        if param.example
+                            span.text-muted.example
+                                strong Example:&nbsp;
+                                span= param.example
+                        != markdown(param.description)
+                        if param.values.length
+                            p
+                                strong Choices:&nbsp;
+                                each value in param.values
+                                    code= value.value
+                                    | &nbsp;
+
+mixin RequestResponse(title, request, resourceGroup, resource, action)
+    - var id = hash(resourceGroup.name.toString() + resource.name.toString() + action.name.toString() + action.method.toString() + title.toString() + request.name.toString() + request.headers.toString() + request.body.toString() + request.schema.toString())
+    - var content = Object.keys(request.headers).length || request.body || request.schema
+    li.list-group-item
+        strong
+            = title
+            if request.name
+                | &nbsp;&nbsp;
+                code= request.name
+        if content
+            a.pull-right(data-toggle="collapse", data-target="##{id}") Toggle
+    if content
+        li.list-group-item.panel-collapse.collapse(id=id)
+            if Object.keys(request.headers).length
+                .description!= markdown(request.description)
+                h5 Headers
+                pre
+                    code
+                        each item in request.headers
+                            != highlight(item.name + ': ' + item.value, 'http')
+                            br
+            if request.body
+                h5 Body
+                pre
+                    code!= highlight(request.body)
+            if request.schema
+                h5 Schema
+                pre
+                    code!= highlight(request.schema)
+
+
+mixin Examples(resourceGroup, resource, action)
+    ul.list-group
+        each example in action.examples
+            each request in example.requests
+                +RequestResponse('Request', request, resourceGroup, resource, action)
+            each response in example.responses
+                +RequestResponse('Response', response, resourceGroup, resource, action)
+
+mixin ResourceGroup(resourceGroup, getButtonClass, multipage)
+    .panel.panel-default
+        .panel-heading
+            h3(id="#{slug(resourceGroup.name)}")
+                = resourceGroup.name || 'Resource Group'
+                | &nbsp;
+                a(href="##{multipage ? 'page:' : ''}#{slug(resourceGroup.name)}")
+                    i.fa.fa-link
+        .panel-body
+            if resourceGroup.description
+                != markdown(resourceGroup.description)
+            each resource in resourceGroup.resources
+                h4(id="#{slug(resourceGroup.name)}-#{slug(resource.name)}")
+                    = resource.name || 'Resources'
+                    | &nbsp;
+                    a(href="##{(multipage ? 'page:' + slug(resourceGroup.name) + ',header:' : '')}#{slug(resourceGroup.name)}-#{slug(resource.name)}")
+                        i.fa.fa-link
+                if resource.description
+                    != markdown(resource.description)
+                each action in resource.actions
+                    case action.method
+                        when 'POST': - var panelClass = 'panel-success'
+                        when 'GET': - var panelClass = 'panel-info'
+                        when 'PUT': - var panelClass = 'panel-warning'
+                        when 'PATCH': - var panelClass = 'panel-warning'
+                        when 'DELETE': - var panelClass = 'panel-danger'
+                        default: - var panelClass = 'panel-default'
+                    section.panel(class=panelClass, id="#{slug(resourceGroup.name)}-#{slug(resource.name)}-#{slug(action.method)}")
+                        .panel-heading
+                            if action.name
+                                div(style="float:right")
+                                    span(style="text-transform: lowercase")= action.name
+                            case action.method
+                                when 'POST': - var btnClass = 'btn-success'
+                                when 'GET': - var btnClass = 'btn-' + getButtonClass
+                                when 'PUT': - var btnClass = 'btn-warning'
+                                when 'PATCH': - var btnClass = 'btn-warning'
+                                when 'DELETE': - var btnClass = 'btn-danger'
+                                default: - var btnClass = 'btn-default'
+                            div(style="float:left")
+                                a.btn.btn-xs(class=btnClass, href="##{(multipage ? 'page:' + slug(resourceGroup.name) + ',header:' : '')}#{slug(resourceGroup.name)}-#{slug(resource.name)}-#{slug(action.method)}")= action.method
+                            div(style="overflow:hidden")
+                                code= resource.uriTemplate
+                        if action.description
+                            .panel-body!= markdown(action.description)
+
+                        - var params = action.parameters.length ? action.parameters : resource.parameters
+                        if params.length
+                            +Parameters(params)
+                        if action.examples
+                            +Examples(resourceGroup, resource, action)
+
+mixin Paginate(resourceGroups, index)
+    if index < resourceGroups.length - 1
+        a.btn.btn-default.pull-right(href="#page:#{slug(resourceGroups[index + 1].name)}")
+            | Next&nbsp;
+            i.fa.fa-arrow-circle-right
+
+    if index > 0
+        a.btn.btn-default(href="#page:#{slug(resourceGroups[index - 1].name)}")
+            i.fa.fa-arrow-circle-left
+            |  Previous
+    else
+        a.btn.btn-default(href="#")
+            i.fa.fa-arrow-circle-left
+            |  Previous
+    .clearfix
+    hr
+
+mixin Icon(method)
+    case method
+        when 'GET'
+            i.fa.fa-arrow-circle-down
+        when 'POST'
+            i.fa.fa-plus-square
+        when 'PUT'
+            i.fa.fa-pencil
+        when 'PATCH'
+            i.fa.fa-pencil
+        when 'DELETE'
+            i.fa.fa-warning
+        default
+            i.fa.fa-dot-circle-o
+
+mixin Content(getButtonClass, multipage)
+    div(data-bind=multipage ? "visible: page() == 'home'" : undefined)
+        header
+            .page-header
+                h1#top= api.name || 'API Documentation'
+
+        .description!= markdown(api.description)
+
+        if multipage
+            a.btn.btn-default.pull-right(href="#page:#{slug(api.resourceGroups[0].name)}")
+                | Next&nbsp;
+                i.fa.fa-arrow-circle-right
+            .clearfix
+            hr
+
+    each resourceGroup, index in api.resourceGroups
+        div(data-bind=multipage ? "visible: page() == '#{slug(resourceGroup.name)}', style: {marginTop: page() == '#{slug(resourceGroup.name)}' ? '38px' : ''}" : undefined)
+            +ResourceGroup(resourceGroup, getButtonClass, multipage)
+
+            if multipage
+                +Paginate(api.resourceGroups, index)
+
+mixin Multipage()
+    //- Multi-page support through Knockout.js
+    script(src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js")
+    script
+        :coffee
+            class App
+                constructor: ->
+                    @page = ko.observable 'home'
+
+            window.app = new App()
+
+            window.onhashchange = ->
+                vars = {}
+                for v in location.hash.substr(1).split(',')
+                    parts = v.split ':'
+                    vars[parts[0]] = parts[1]
+
+                # Set the page
+                window.app.page vars.page or 'home'
+
+                # Scroll to a header if Set
+                if vars.header
+                    $("##{vars.header}")[0].scrollIntoView true
+                else
+                    window.scrollTo 0, 0
+
+            ko.applyBindings window.app
+
+            # Load the correct page
+            window.onhashchange()
+
+
+  block bootstrap-theme
+
+  block styles
+      style.
+          /* Highlight.js Theme Tomorrow */
+          .hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}
+      style
+          :stylus
+              body, h4, h5
+                  font-family 'Roboto' sans-serif !important
+
+              h1, h2, h3, .aglio
+                  font-family 'Raleway' sans-serif !important
+
+              h1, h2, h3, h4, h5
+                  & a
+                      display none
+
+                  &:hover a
+                      display inline
+
+              code
+                  color #444
+                  background-color #ddd
+                  font-family 'Inconsolata' monospace !important
+
+              a[data-target]
+                  cursor pointer
+
+              h4
+                  font-size 100%
+                  font-weight bold
+                  text-transform uppercase
+
+              .back-to-top
+                  position fixed
+                  z-index 1
+                  bottom 0px
+                  right 24px
+                  padding 4px 8px
+                  background-color #eee
+                  text-decoration none !important
+                  border-top 1px solid rgba(0, 0, 0, 0.1)
+                  border-left 1px solid rgba(0, 0, 0, 0.1)
+                  border-right 1px solid rgba(0, 0, 0, 0.1)
+                  border-top-left-radius 3px
+                  border-top-right-radius 3px
+
+              .panel
+                  overflow hidden
+
+              .panel-heading
+                  code
+                      color #c7254e
+                      background-color transparent
+                      white-space pre-wrap
+                      white-space -moz-pre-wrap
+                      white-space -pre-wrap
+                      white-space -o-pre-wrap
+                      word-wrap break-word
+                  h3
+                      margin-top 10px
+                      margin-bottom 10px
+
+              a.list-group-item
+                  white-space nowrap
+                  text-overflow ellipsis
+                  overflow hidden
+
+                  &.heading
+                      background-color #f5f5f5
+
+              .list-group-item.collapse
+                  display none
+
+              .list-group-item.collapse.in
+                  display block
+
+              #nav
+                  margin-top 38px
+                  min-width 255px
+                  top 0
+                  bottom 0
+                  padding-right 12px
+                  padding-bottom 12px
+                  overflow-y auto
+
+              @media(max-width: 1199px)
+                  #nav
+                      min-width 212px
+
+    a.text-muted.back-to-top(href='#top')
+        i.fa.fa-toggle-up
+        | &nbsp;Back to top
+    .container
+        .row
+            block nav
+                +Nav(false)
+
+            .col-md-9
+                block content
+                    +Content('primary', false)
+
+    p.text-muted(style="text-align: center;")
+        | Generated by&nbsp;
+        a.aglio(href="https://github.com/danielgtaylor/aglio") aglio
+        | &nbsp;on #{date().format('DD MMM YYYY')}
+
+    #localFile(style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;").
+        This page may not display correctly when opened as a local file. Instead, view it from a web server.
+
+
+    script(src="//code.jquery.com/jquery-1.11.0.min.js")
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js")
+    script
+        :coffee
+            # Show a warning when viewed as a local file, which will break the
+            # links above that start with `//`.
+            if location.protocol is 'file:'
+                document.getElementById('localFile').style.display = 'block';
+    block scripts
+        script
+            :coffee
+                $('table').addClass 'table'
