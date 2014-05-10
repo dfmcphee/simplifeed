@@ -39,4 +39,17 @@ $(document).ready(function() {
       captionOff();
     }
   });
+
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      $('#imagelightbox-overlay').remove();
+      $('#imagelightbox').remove();
+      $('#progress').remove();
+
+      if (jqXHR) {
+        activeUploads = 0;
+        jqXHR.abort();
+      }
+    }
+  });
 });

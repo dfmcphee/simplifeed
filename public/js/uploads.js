@@ -46,16 +46,6 @@ $(document).ready(function() {
         }
     });
 
-    $(document).keyup(function(e) {
-      if (e.keyCode == 27) {
-        $('#imagelightbox-overlay').remove();
-        $('#progress').remove();
-        activeUploads = 0;
-        jqXHR.abort();
-      }
-    });
-
-
     $("body").on("dragover", function(event) {
 
       // Do something to UI to make page look droppable
