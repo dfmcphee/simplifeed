@@ -1,4 +1,6 @@
 var jqXHR;
+var activeUploads = 0;
+var currentUpload = 1;
 
 $(document).ready(function() {
     $container = $('#post-uploads');
@@ -37,10 +39,11 @@ $(document).ready(function() {
               $container.masonry('appended', $(html));
             });
 
-            if (currentUpload++ === (activeUploads - 1)) {
+            if (currentUpload++ === activeUploads) {
               $('#progress').hide();
               $('#imagelightbox-overlay').remove();
               activeUploads = 0;
+              currentUpload = 1;
             }
           });
         }

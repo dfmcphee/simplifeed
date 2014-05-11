@@ -7,8 +7,6 @@
 
 var $container;
 var pageInitialized = false;
-var activeUploads = 0;
-var currentUpload = 0;
 var sizeRangeSuffixes = {
   'lt100':'',
   'lt240':'',
