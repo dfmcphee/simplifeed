@@ -53,9 +53,9 @@ var init = function(cb) {
   geddy.sendMail = function (mailOptions) {
       geddy.smtpTransport.sendMail(mailOptions, function(error, response){
           if(error){
-              console.log(error);
-          } else{
-              console.log("Message sent: " + response.message);
+              console.log('Error sending message: ' + error);
+          } else {
+              console.log('Message sent: ' + response.message);
           }
       });
   };

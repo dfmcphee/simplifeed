@@ -111,10 +111,10 @@ Notification.createAndSendToAll = function (content, link, sender) {
               generateTextFromHTML: true,
               text: null
             }, function(err, responseStatus) {
-              if (err) {
-                console.log(err);
+              if (err){
+                  console.log('Error sending message: ' + err);
               } else {
-                console.log(responseStatus.message);
+                  console.log('Message sent: ' + responseStatus.message);
               }
             });
           }
