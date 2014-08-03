@@ -12,7 +12,7 @@ HOST: http://simplifeed.me
 
 Easiest way is to use nvm: https://github.com/creationix/nvm
 
-***Geddy 0.12.x***
+***Geddy 0.13.x***
 
 ```
 [sudo] npm -g install geddy

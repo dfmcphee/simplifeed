@@ -1,6 +1,6 @@
 var assert = require('assert')
   , tests
-  , Notification = geddy.model.Notification;
+  , Notification = mailerHelper;
 
 tests = {
 

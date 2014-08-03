@@ -1,6 +1,7 @@
 var passport = require('../helpers/passport')
-  , requireAuth = passport.requireAuth;
-var getAvatar = require('../helpers/files').getAvatar;
+  , requireAuth = passport.requireAuth
+  , getAvatar = require('../helpers/files').getAvatar
+  , mailerHelper = require('../helpers/mailer');
 
 var Comments = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -22,7 +23,7 @@ var Comments = function () {
         comment.setPost(post);
 
         if (user.id !== post.userId) {
-          geddy.model.Notification.createAndSend(
+          mailerHelper.createAndSend(
             user.fullName() + ' commented on your post.',
             '/posts/' + post.id,
             post.user
@@ -32,7 +33,7 @@ var Comments = function () {
         if (post.comments) {
           for (var i=0; i < post.comments.length; i++){
             if (post.comments[i].user.id !== user.id && post.comments[i].user.id !== post.userId) {
-              geddy.model.Notification.createAndSend(
+              mailerHelper.createAndSend(
                 user.fullName() + ' also commented on a post.',
                 '/posts/' + post.id,
                 post.comments[i].user

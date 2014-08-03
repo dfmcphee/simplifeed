@@ -3,7 +3,8 @@ var passport = require('../helpers/passport')
   , addUploadToPost = require('../helpers/files').addUploadToPost
   , removeUpload = require('../helpers/files').removeUpload
   , removeUserFieldsFromPost = require('../helpers/general').removeUserFieldsFromPost
-  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts;
+  , removeUserFieldsFromPosts = require('../helpers/general').removeUserFieldsFromPosts
+  , mailerHelper = require('../helpers/mailer');
 
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -29,7 +30,7 @@ var Posts = function () {
       }
     };
 
-    var db = geddy.model.loadedAdapters.Post.client;
+    var db = geddy.model.adapters.postgres.client;
 
     db.query('SELECT count(*) AS count FROM posts;', function (err, result) {
         params.recordCount = Number(result.rows[0].count);
@@ -96,13 +97,13 @@ var Posts = function () {
             var i = 0;
 
             if (keys.length > 1) {
-              geddy.model.Notification.createAndSendToAll(
+              mailerHelper.createAndSendToAll(
                 user.fullName() + ' posted an album to ' + geddy.config.appName,
                 'posts/' + post.id,
                 self.session.get('userId')
               );
             } else {
-              geddy.model.Notification.createAndSendToAll(
+              mailerHelper.createAndSendToAll(
                 user.fullName() + ' posted a photo to ' + geddy.config.appName,
                 'posts/' + post.id,
                 self.session.get('userId')
@@ -118,7 +119,7 @@ var Posts = function () {
               throw err;
             }
 
-            geddy.model.Notification.createAndSendToAll(
+            mailerHelper.createAndSendToAll(
               user.fullName() + ' posted to ' + geddy.config.appName,
               'posts/' + post.id,
               self.session.get('userId')

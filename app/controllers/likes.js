@@ -1,5 +1,6 @@
 var passport = require('../helpers/passport')
-  , requireAuth = passport.requireAuth;
+  , requireAuth = passport.requireAuth
+  , mailerHelper = require('../helpers/mailer');
 
 var Likes = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -23,7 +24,7 @@ var Likes = function () {
           var like = geddy.model.Like.create({});
 
           if (user.id !== post.userId) {
-            geddy.model.Notification.createAndSend(
+            mailerHelper.createAndSend(
               user.fullName() + ' liked your post.',
               '/posts/' + post.id,
               post.user

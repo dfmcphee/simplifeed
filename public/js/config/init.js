@@ -10,7 +10,7 @@ geddy.io.addListenersForModels();
 
 geddy.io.addListenersForModels(['Notification']);
 
-geddy.model.Notification.on('save', function (item) {
+mailerHelper.on('save', function (item) {
   if (item.userId === userId) {
     var html = new EJS({url: '/js/templates/notification.ejs'}).render({notification: item, unread: 'unread'});
     $('#notifications').prepend(html);
@@ -25,7 +25,7 @@ geddy.model.Notification.on('save', function (item) {
   }
 });
 
-geddy.model.Notification.on('update', function (item) {
+mailerHelper.on('update', function (item) {
   console.log(item);
 });
 
