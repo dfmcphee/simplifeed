@@ -6,9 +6,6 @@ var passport = require('passport')
   , bcrypt = require('bcrypt');
 
 var SUPPORTED_SERVICES = [
-      'twitter'
-    , 'facebook'
-    , 'yammer'
     ];
 
 SUPPORTED_SERVICES.forEach(function (item) {
