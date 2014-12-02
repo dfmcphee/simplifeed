@@ -81,6 +81,8 @@ var Posts = function () {
     var self = this
       , post = geddy.model.Post.create(params);
 
+    var userId = self.session.get('userId');
+
     if (!post.isValid()) {
       this.respondWith(post);
     }
@@ -100,13 +102,13 @@ var Posts = function () {
               mailerHelper.createAndSendToAll(
                 user.fullName() + ' posted an album to ' + geddy.config.appName,
                 'posts/' + post.id,
-                self.session.get('userId')
+                userId
               );
             } else {
               mailerHelper.createAndSendToAll(
                 user.fullName() + ' posted a photo to ' + geddy.config.appName,
                 'posts/' + post.id,
-                self.session.get('userId')
+                userId
               );
             }
 
@@ -122,7 +124,7 @@ var Posts = function () {
             mailerHelper.createAndSendToAll(
               user.fullName() + ' posted to ' + geddy.config.appName,
               'posts/' + post.id,
-              self.session.get('userId')
+              userId
             );
 
             if (params.format && params.format === 'json') {

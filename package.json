@@ -13,6 +13,7 @@
     "hat": "*",
     "nodemailer": "*",
     "email-templates": "*",
+    "mandrill-api": "~1.0.40",
     "pg": "2.5.x",
     "uploadfs": "*",
     "formidable": "*",

@@ -12,3 +12,4 @@ _session_store.json
 temp
 deploy.sh
 deploy-mcfeed.sh
+public/uploads

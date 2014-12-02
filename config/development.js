@@ -16,12 +16,14 @@
  *
 */
 
+var path = require("path");
+
 var config = {
   appName: 'Simplifeed'
 , detailedErrors: true
 , debug: true
 , hostname: 'localhost'
-, externalHost: 'simplifeed.me'
+, externalHost: 'localhost:4000'
 , protocol: 'http'
 , port: 4000
 , model: {
@@ -36,6 +38,26 @@ var config = {
     , port: 5432
   }
 }
+, storage: {
+    backend: 'local',
+    uploadsPath: __dirname + '/../public',
+    // Required if you use copyImageIn
+    // Temporary files are made here and later automatically removed
+    tempPath: '../temp',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 200,
+        height: 200
+      },
+      {
+        name: 'small',
+        width: 500,
+        height: 500
+      }
+    ],
+    parallel: 4
+  }
 , sessions: {
     store: 'filesystem'
   , filename: '_session_store.json'
