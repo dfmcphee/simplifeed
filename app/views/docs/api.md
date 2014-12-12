@@ -35,7 +35,13 @@ Run `npm install` to install dependencies
 
 Run `geddy secret` to generate a new secrets file
 
-You will need to add your mailer and s3 config to your secrets file after it has been generated
+Copy the needed information from config/secrets.sample.json (s3, typekit, and analytics are optional) into your newly generated config/secrets.json file, filling in the blanks.
+
+Run `geddy jake db:migrate` to create the database
+
+Add your [SMTP](https://github.com/dfmcphee/simplifeed/wiki/SMTP-Configuration) or [Mandrill](https://github.com/dfmcphee/simplifeed/wiki/Mandrill-Configuration) config
+
+Configure [S3 storage](https://github.com/dfmcphee/simplifeed/wiki/S3-Configuration) if you want (will store uploads locally otherwise)
 
 Run `geddy` to start the server
 
